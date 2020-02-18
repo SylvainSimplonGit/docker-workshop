@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Les outils pour réussir sa formation</title>
+  <link rel="icon" href="ressources/images/favicon-32x32.png" />
+  <link rel="stylesheet" href="../reveal-3.9.2/css/theme/simple.css" id="theme">
+  <link rel="stylesheet" href="../reveal-3.9.2/css/presentation.css">
+  <link rel="stylesheet" href="../reveal-3.9.2/css/reveal.css">
+  <link rel="stylesheet" href="../reveal-3.9.2/lib/css/monokai.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? '../reveal-3.9.2/css/print/pdf.css' :
+      '../reveal-3.9.2/css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <!-- Wrap the entire slide show in a div using the "reveal" class. -->
+  <div class="reveal">
+    <!-- Wrap all slides in a single "slides" class -->
+    <div class="slides">
+
+      <!-- ALL SLIDES GO HERE -->
+      <!-- Each section element contains an individual slide -->
+      <section>
+        <h1>Installation de Docker</h1>
+        <img class="logo" src="ressources/images/horizontal-logo-monochromatic-white.png" alt="Logo Docker">
+      </section>
+
+      <section>
+        <section>
+          <h1>Sur Ubuntu</h1>
+          <img class="logo" src="ressources/images/logo_ubuntu_18.4LTS.jpeg" alt="Logo Ubuntu 18.04 LTS">
+        </section>
+        <!-- Slides are separated by three dashes (quick 'n dirty regular expression) -->
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Pré requis d'installation
+            Avoir une version d'Ubuntu 64 bits parmi :
+            - Eoan 19.10
+            - Bionic 18.04 LTS
+            - Xenial 16.04 LTS
+            ---
+            ## Afficher sa version d'Ubuntu
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo lsb_release -a | grep Description
+            ```
+          </script>
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Désinstaller les anciennes versions
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo apt-get remove docker docker-engine docker.io containerd runc
+            ```
+          </script>
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Configurer le Repo Docker
+            Mettre à jour vos packages
+
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo apt-get update
+            ```
+            ---
+            ## Configurer le Repo Docker
+            Installer les packages pour accéder au repo en https
+
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo apt-get install \
+                apt-transport-https \
+                ca-certificates \
+                curl \
+                gnupg-agent \
+                software-properties-common
+            ```
+            ---
+            ## Configurer le Repo Docker
+            Ajouter la clé GPG officielle de Docker
+            
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+            ```
+            ---
+            ## Configurer le Repo Docker
+            Verify that you now have the key with the fingerprint
+            
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo apt-key fingerprint 0EBFCD88
+            ```
+
+            Vous devriez voir :
+            ```shell
+            pub   rsa4096 2017-02-22 [SCEA]
+                  9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+            uid           [ unknown] Docker Release (CE deb) <docker@docker.com>
+            sub   rsa4096 2017-02-22 [S]
+            ```
+            ---
+            ## Configurer le Repo Docker
+            set up the stable repository
+            
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo add-apt-repository \
+                "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+                $(lsb_release -cs) \
+                stable"
+            ```
+          </script>
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Installer Docker Engine Community
+            Mettre à jour vos packages
+
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo apt-get update
+            ```
+            ---
+            ## Installer Docker Engine Community
+            Installer la dernière version de Docker Engine
+
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo apt-get install \
+                docker-ce \
+                docker-ce-cli \
+                containerd.io
+            ```
+          </script>
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Vérifier l'installation
+            Pour vérifier que Docker fonctionne correctement
+
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo docker run hello-world
+            ```
+          </script>
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Installer Docker Compose
+            Installer la dernière version de Docker Compose
+  
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo curl -L \
+                "https://github.com/docker/compose/releases/download/ \
+                1.25.3/docker-compose-$(uname -s)-$(uname -m)" \
+                -o /usr/local/bin/docker-compose
+            ```
+            ---
+            ## Installer Docker Compose
+            Rendre executable le binaire
+            ```shell
+            $ sudo chmod +x /usr/local/bin/docker-compose
+            ```
+            ---
+            ## Vérifier l'installation
+            Pour vérifier que Docker Compose est bien installé
+  
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ docker-compose --version
+            ```
+            Vous devriez voir le résultat suivant :
+            ```shell
+            docker-compose version 1.25.3, build 1110ad01
+            ```
+          </script>
+        </section>
+      </section>
+
+
+      <section>
+        <section>
+          <h1>Sur Windows</h1>
+          <img class="logo" src="ressources/images/logo_windows10.jpg" alt="Logo Windows 10">
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Pré requis d'installation
+            - Windows 10 64-bit: 
+              - Pro, 
+              - Enterprise, 
+              - or Education (Build 15063 or later)
+            - Hyper-V activé
+          </script>
+        </section>
+        <section>
+          <h2>Vérification de l'activation de la virtualisation</h2>
+          <img class="logo" src="ressources/images/virtualization-enabled.png" alt="Virtualization Enabled">
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Récupération de Docker Desktop
+            Récupérer le fichier d'installation de Docker sur le **DockerHub** à l'adresse suivante :
+
+            [Docker Desktop for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows)
+
+            ou télécharger le fichier en cliquant sur ce lien :
+            
+            [Get Docker Desktop for Windows](https://download.docker.com/win/stable/Docker%20Desktop%20Installer.exe)
+          </script>
+        </section>
+        <section>
+          <h2>Installation de Docker Desktop</h2>
+          <p>Double-cliquer sur le fichier <br><strong>Docker Desktop Installer.exe</strong>,<br>
+            Puis suivez les instructions d'installation.
+          </p>
+        </section>
+        <section>
+          <h2>Lancement de Docker</h2>
+          <p>Chercher Docker dans le menu Windows, puis cliquez sur Docker Desktop</p>
+          <img class="logo" src="ressources/images/docker-app-search.png" alt="Docker Icon in status bar">
+        </section>
+        <section>
+          <h2>Validation de l'installation</h2>
+          <p>Vous devez voir dans la barre de status, l'icône Docker apparaitre</p>
+          <img class="logo" src="ressources/images/whale-icon-systray.png" alt="Docker Icon in status bar">
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Vérifier l'installation
+            Pour vérifier que Docker fonctionne correctement
+
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo docker run hello-world
+            ```
+          </script>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1>Sur Mac</h1>
+          <img class="logo" src="ressources/images/logo_macos.png" alt="Logo MacOS">
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Pré requis d'installation
+            - un modèle 2010 ou plus récent
+            - ayant la prise en charge matérielle Intel de la virtualisation MMU
+            - et un accès administarteur
+            - une version de macOS >= **v10.13**
+            - au moins **4GB** de RAM
+            - VirtualBox =< **v4.3.30** ne doit pas être installé
+            ---
+            ## Vérifier la compatibilité
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sysctl kern.hv_support
+            ```
+            Pour être compatible, vous devez voir :
+            ```shell
+            kern.hv_support: 1
+            ```
+          </script>
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Récupération de Docker Desktop
+            Récupérer le fichier d'installation de Docker sur le **DockerHub** à l'adresse suivante :
+
+            [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac)
+
+            ou télécharger le fichier en cliquant sur ce lien :
+            
+            [Get Docker Desktop for Mac](https://download.docker.com/mac/stable/Docker.dmg)
+          </script>
+        </section>
+        <section>
+          <h2>Installation de Docker Desktop</h2>
+          <p>Double-cliquer sur le fichier <strong>Docker.dmg</strong>,<br>
+            Puis faites un Drag&Drop de l'icône <strong>Docker.app</strong> vers le répertoire Application.
+          </p>
+          <img class="logo" src="ressources/images/docker-app-drag.png" alt="Drag Docker.app in Application">
+        </section>
+        <section>
+          <h2>Installation de Docker Desktop</h2>
+          <p>Double-cliquer sur le fichier <strong>Docker.app</strong>, pour démarrer Docker.</p>
+          <img class="logo" src="ressources/images/docker-app-in-apps.png" alt="Double click on Docker.app">
+        </section>
+        <section>
+          <h2>Autorisation de Docker Desktop</h2>
+          <p>Une autorisation Système vous sera demandée, acceptez la.<br>
+            Des privilèges sont nécessaires à l'installation de composants réseau et lien entre application Docker</p>
+        </section>
+        <section>
+          <h2>Validation de l'installation</h2>
+          <p>Vous devez voir dans la barre de status, l'icône Docker apparaitre</p>
+          <img class="logo" src="ressources/images/whale-in-menu-bar.png" alt="Docker Icon in status bar">
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            ## Vérifier l'installation
+            Pour vérifier que Docker fonctionne correctement
+
+            Dans un terminal executer la commande suivante :
+            ```shell
+            $ sudo docker run hello-world
+            ```
+          </script>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1>Annexe</h1>
+          <img class="logo" src="ressources/images/logo_annexe.jpg" alt="Logo Annexe">
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            # Liens
+            - [Docker CE](https://hub.docker.com/search?q=docker-ce-desktop&type=edition&offering=community)
+          </script>
+        </section>
+      </section>
+
+    </div>
+  </div>
+  <script src="../reveal-3.9.2/js/reveal.js"></script>
+
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+
+      transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+      // More info https://github.com/hakimel/reveal.js#dependencies
+      dependencies: [
+        {
+          src: '../reveal-3.9.2/plugin/markdown/marked.js'
+        },
+        {
+          src: '../reveal-3.9.2/plugin/markdown/markdown.js'
+        },
+        {
+          src: '../reveal-3.9.2/plugin/highlight/highlight.js',
+          async: true,
+          callback: function () {
+            hljs.initHighlightingOnLoad();
+          }
+        },
+        {
+          src: '../reveal-3.9.2/plugin/notes/notes.js',
+          async: true
+        }
+      ]
+    });
+  </script>
+</body>
+
+</html>
