@@ -44,3 +44,7 @@ $ cd <le_chemin_de_mon_repertoire>\docker-workshop\docs\installation
 ```
 
 Ouvrez le fichier `docker_install.html` dans votre navigateur préféré, choississez votre OS et suivez les instructions !
+
+## Déroulement de l'Atelier
+
+[Planning prévisionnel](./schedule.md)
