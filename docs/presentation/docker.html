@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Les outils pour réussir sa formation</title>
+  <link rel="icon" href="ressources/images/favicon-32x32.png" />
+  <link rel="stylesheet" href="../reveal-3.9.2/css/theme/simple.css" id="theme">
+  <link rel="stylesheet" href="../reveal-3.9.2/css/presentation.css">
+  <link rel="stylesheet" href="../reveal-3.9.2/css/reveal.css">
+  <link rel="stylesheet" href="../reveal-3.9.2/lib/css/monokai.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? '../reveal-3.9.2/css/print/pdf.css' :
+      '../reveal-3.9.2/css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <!-- Wrap the entire slide show in a div using the "reveal" class. -->
+  <div class="reveal">
+    <!-- Wrap all slides in a single "slides" class -->
+    <div class="slides">
+
+      <!-- ALL SLIDES GO HERE -->
+      <!-- Each section element contains an individual slide -->
+
+      <section>
+        <section>
+          <h1>Docker</h1>
+          <img class="logo" src="ressources/images/horizontal-logo-monochromatic-white.png" alt="Logo Docker">
+        </section>
+        <section>
+          <h3><blockquote>Déboguer votre application, <br>pas votre environnement</blockquote></h3>
+
+          <aside class="notes">
+            L'interêt de Docker est de fournir une "couche" commune au différents OS afin d'executer le code dans le
+            même environnement quelque soit l'OS qui héberge Docker.
+          </aside>
+        </section>
+
+        <section>
+          <h2>L'histoire de Docker</h2>
+          <ul>
+            <li><strong>2010</strong></li>
+          </ul>
+
+          <aside class="notes">
+            En <strong>2010</strong>, Solomon Hykes met en avant un concept, Docker, transposant à l’industrie du logiciel l’idée du conteneur qui a révolutionné l’industrie du transport.<br>
+          </aside>
+        </section>
+        <section>
+          <h2>L'histoire de Docker</h2>
+          <ul>
+            <li>2010</li>
+            <li><strong>janvier 2011</strong></li>
+          </ul>
+
+          <aside class="notes">
+            En <strong>janvier 2011</strong>, dotCloud la société française de Solomon Hykes, s'implante dans la Silicon Valley.<br>
+          </aside>
+        </section>
+        <section>
+          <h2>L'histoire de Docker</h2>
+          <ul>
+            <li>2010</li>
+            <li>janvier 2011</li>
+            <li><strong>2013</strong></li>
+          </ul>
+
+          <aside class="notes">
+            Début <strong>2013</strong>, Solomon Hykes ouvre les sources de sa technologie de container à la communauté open source, créant un engouement important.<br>
+          </aside>
+        </section>
+        <section>
+          <h2>L'histoire de Docker</h2>
+          <ul>
+            <li>2010</li>
+            <li>janvier 2011</li>
+            <li>2013</li>
+            <li><strong>juin 2014</strong></li>
+          </ul>
+
+          <aside class="notes">
+            La version 1.0 de Docker fut lancée en <strong>juin 2014</strong>, dans le but de faciliter l’utilisation des containers.<br>
+          </aside>
+        </section>
+        <section>
+          <h2>L'histoire de Docker</h2>
+          <ul>
+            <li>2010</li>
+            <li>janvier 2011</li>
+            <li>2013</li>
+            <li>juin 2014</li>
+            <li><strong>octobre 2014</strong></li>
+          </ul>
+
+          <aside class="notes">
+            En <strong>octobre 2014</strong>, Microsoft annonce l'intégration de Docker dans Windows Server 2016.<br>
+          </aside>
+        </section>
+        <section>
+          <h2>L'histoire de Docker</h2>
+          <ul>
+            <li>2010</li>
+            <li>janvier 2011</li>
+            <li>2013</li>
+            <li>juin 2014</li>
+            <li>octobre 2014</li>
+            <li><strong>novembe 2014</strong></li>
+          </ul>
+
+          <aside class="notes">
+            En <strong>novembe 2014</strong>, Google et Amazon se lancent dans un partenariat avec Docker Inc.<br>
+          </aside>
+        </section>
+        <section>
+          <h2>L'histoire de Docker</h2>
+          <ul>
+            <li>2010</li>
+            <li>janvier 2011</li>
+            <li>2013</li>
+            <li>juin 2014</li>
+            <li>octobre 2014</li>
+            <li>novembe 2014</li>
+            <li><strong>décembre 2014</strong></li>
+          </ul>
+
+          <aside class="notes">
+            En <strong>décembre 2014</strong>, c'est au tour d'IBM.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Docker en chiffres</h2>
+          <p>Selon les créateurs de Docker</p>
+          <ul>
+            <li><strong>3,5 millions</strong> d’applications containerisées</li>
+            <li><strong>37 milliards</strong> d’applications téléchargées</li>
+          </ul>
+          <p>RightScale estime que l’adoption de Docker</p>
+          <ul>
+            <li>a augmenté de <strong>35% en 2017</strong></li>
+            <li>a augmenté de <strong>49% en 2018</strong></li>
+          </ul>
+          <aside class="notes">
+            Aujourd’hui, selon les créateurs de Docker, plus de <strong>3,5 millions</strong> d’applications 
+            ont été <strong>containerisées</strong> en utilisant cette technologie.<br>
+            L’on compte pas moins de <strong>37 milliards</strong> d’applications containerisées <strong> téléchargées</strong> .
+          </aside>
+        </section>
+
+        <section>
+          <h2>Les avantages de Docker</h2>
+          <img class="logo" src="ressources/images/docker-avantages.jpg" alt="Comparaison VM vs Containers">
+
+          <aside class="notes">
+            Plutôt que de virtualiser le hardware comme l’hyperviseur, le container virtualise le système d’exploitation.<br>
+            1 OS pour tous les containers au lieu d'un OS par VM.<br>
+            <strong>Gain de place disque, de Ram</strong>.<br>
+            Il est donc nettement plus efficient qu’un hyperviseur en termes de consommation des ressources système.<br>
+            Concrètement, il est possible d’exécuter près de 4 à 6 fois plus d’instances
+            d’applications avec un container qu’avec des machines virtuelles comme Xen
+            ou KVM sur le même hardware.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Parlez vous Docker ?</h2>
+          <ul>
+            <li>Dockerfile</li>
+            <li>Registry</li>
+            <li>Image</li>
+            <li>Container</li>
+          </ul>
+
+          <aside class="notes">
+            Est-ce que ces termes vous parlent ?
+          </aside>
+        </section>
+
+        <section>
+          <h2>Dockerfile</h2>
+          <blockquote>c'est un document texte qui contient toutes les commandes que l'on pourrait executer via le shell pour créer son environnement.</blockquote>
+
+          <aside class="notes">
+            Dockerfile :<br>
+            c'est un document texte qui contient toutes les commandes que l'on pourrait appeler en ligne de
+            commande pour créer son environnement.
+          </aside>
+        </section>
+        <section>
+          <h2>Dockerfile exemple</h2>
+          <pre><code class="dockerfile">
+FROM alpine:latest
+ENV HELLO_MSG="Welcome in Docker"
+CMD ["/usr/bin/echo", "$HELLO_MSG"]
+          </code></pre>
+          </script>
+
+          <aside class="notes">
+            Cet exemple se base sur la dernière image Alpine,<br>
+            déclare une variable d'environnement HELLO_MSG et lui donne comme valeur "Welcome in Docker"<br>
+            puis execute la commande echo $HELLO_MSG qui devrait afficher : "Welcome in Docker"
+          </aside>
+        </section>
+
+        <section>
+          <h2>Registry</h2>
+          <blockquote>
+            La registry est une application côté serveur, hautement évolutive qui stocke les images Docker et vous permet
+            d'y accéder.
+          </blockquote>
+          <aside class="notes">
+            
+          </aside>
+        </section>
+
+        <section>
+          <h2>Image</h2>
+          <blockquote>
+            Une image est créée via un <strong>Dockerfile</strong>.<br>
+            Chaque fichier image est composé d'une <strong>série de couches.</strong><br>
+            Chaque fois qu'une commande, comme RUN ou COPY, est executée une <strong>nouvelle couche</strong> se crée.
+          </blockquote>
+
+          <aside class="notes">
+            Image :
+          </aside>
+        </section>
+
+        <section>
+          <h2>Container</h2>
+          <blockquote>
+            Un Container est une <strong>copie</strong> d'une image.<br>
+            Il permet <strong>d'isoler chaque service</strong> qui peut être exécuté de façon <strong>indépendante</strong> dans son conteneur dédié.<br>
+            Ce Container ne contient <strong>que</strong> les dépendances <strong>nécessaires</strong>.<br>
+          </blockquote>
+
+          <aside class="notes">
+            Container : Un conteneur permet d'isoler chaque service (le serveur web, la base de données, des
+            applications)
+            pouvant être exécutées de façon indépendante dans leur conteneur dédié, contenant uniquement les dépendances
+            nécessaires.
+            Chaque conteneur est relié par des réseaux virtuels. Il est possible de monter des volumes de disque de la
+            machine hôte dans un conteneur.
+          </aside>
+        </section>
+
+      </section>
+
+      <section>
+        <section>
+          <h1>Annexe</h1>
+          <img class="logo" src="ressources/images/logo_annexe.jpg" alt="Logo Annexe">
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            # Liens
+            - [Docker Wikipedia](https://fr.wikipedia.org/wiki/Docker_(logiciel))
+            - [Solomon Hykes Wikipedia](https://fr.wikipedia.org/wiki/Solomon_Hykes)
+            - [Docker Registry](https://docs.docker.com/registry/)
+            - [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+            - [Docker Create a base Images](https://docs.docker.com/develop/develop-images/baseimages/)
+            - [Docker Images](https://docs.docker.com/engine/reference/commandline/images/)
+            - [Les Chiffres](https://www.lebigdata.fr/docker-definition)
+          </script>
+        </section>
+      </section>
+
+    </div>
+  </div>
+  <script src="../reveal-3.9.2/js/reveal.js"></script>
+
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+
+      transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+      // More info https://github.com/hakimel/reveal.js#dependencies
+      dependencies: [{
+          src: '../reveal-3.9.2/plugin/markdown/marked.js'
+        },
+        {
+          src: '../reveal-3.9.2/plugin/markdown/markdown.js'
+        },
+        {
+          src: '../reveal-3.9.2/plugin/highlight/highlight.js',
+          async: true,
+          callback: function () {
+            hljs.initHighlightingOnLoad();
+          }
+        },
+        {
+          src: '../reveal-3.9.2/plugin/notes/notes.js',
+          async: true
+        }
+      ]
+    });
+  </script>
+</body>
+
+</html>
