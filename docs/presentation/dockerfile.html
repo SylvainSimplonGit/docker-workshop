@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Dockerfile explications</title>
+  <link rel="icon" href="ressources/images/favicon-32x32.png" />
+  <link rel="stylesheet" href="../reveal-3.9.2/css/theme/simple.css" id="theme">
+  <link rel="stylesheet" href="../reveal-3.9.2/css/presentation.css">
+  <link rel="stylesheet" href="../reveal-3.9.2/css/reveal.css">
+  <link rel="stylesheet" href="../reveal-3.9.2/lib/css/monokai.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? '../reveal-3.9.2/css/print/pdf.css' :
+      '../reveal-3.9.2/css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <!-- Wrap the entire slide show in a div using the "reveal" class. -->
+  <div class="reveal">
+    <!-- Wrap all slides in a single "slides" class -->
+    <div class="slides">
+
+      <!-- ALL SLIDES GO HERE -->
+      <!-- Each section element contains an individual slide -->
+      <section>
+        <section>
+          <h1>Dockerfile</h1>
+          <img class="logo" src="ressources/images/horizontal-logo-monochromatic-white.png" alt="Logo Docker">
+        </section>
+        <section>
+          <h2>Dockerfile exemple</h2>
+          <pre><code class="dockerfile">
+FROM debian:jessie
+RUN apt-get update \
+&& apt-get install -y curl \
+&& rm -rf /var/lib/apt/lists/*
+RUN curl -LO "https://nodejs.org/dist/v0.12.5/node-v0.12.5-linux-x64.tar.gz" \
+&& tar -xzf node-v0.12.5-linux-x64.tar.gz -C /usr/local --strip-components=1 \
+&& rm node-v0.12.5-linux-x64.tar.gz
+ADD package.json /app/
+WORKDIR /app
+RUN npm install
+ADD . /app/
+EXPOSE 3000
+VOLUME /app/log
+CMD node server.js
+          </code></pre>
+          <aside class="notes">
+            Docker exécute les instructions dans un Dockerfile dans l'ordre.<br>
+          </aside>
+        </section>
+        <section>
+          <h2>Le mot clé <strong>FROM</strong></h2>
+          <blockquote>Il définit notre image de base,<br>
+              vous ne pouvez l'utiliser qu'une fois dans un Dockerfile.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
+FROM debian:jessie
+...
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Il doit être utiliser<br><strong>au tout début</strong><br>de votre fichier.
+            </figure>
+          </div>
+          <aside class="notes">
+            Un Dockerfile <strong>doit</strong> commencer par une instruction <strong>FROM</strong>. <br>
+            Cela peut être après les directives de l'analyseur, les commentaires <br>
+            et les ARG de portée globale. <br>
+            L'instruction FROM spécifie l'image parente à partir de laquelle vous créez votre nouvelle image. <br>
+            FROM ne peut être précédé que par une ou plusieurs instructions ARG, <br>
+            qui déclarent les arguments utilisés dans les lignes FROM du Dockerfile.
+          </aside>
+        </section>
+
+      <section>
+        <h2>Le mot clé <strong>RUN</strong></h2>
+        <blockquote>Il permet d'exécuter une commande à l'intérieur de votre image comme si vous étiez devant un shell unix.</blockquote>
+        <div class="side-by-side">
+          <figure class="">
+            <pre><code class="dockerfile">
+...
+RUN apt-get update \
+&& apt-get install -y curl \
+&& rm -rf /var/lib/apt/lists/*
+...
+          </code></pre>
+          </figure>
+          <figure class="explications">
+            cette commande nous permet :
+            <ul>
+              <li>de mettre à jour la base de paquets</li>
+              <li>d'installer curl sans validation</li>
+              <li>de nettoyer le gestionnaire de paquets</li>
+            </ul>
+          </figure>
+        </div>
+        <aside class="notes">
+          Dans le Dockerfile, chaque commande (ADD, COPY, ENTRYPOINT, CMD, …) 
+          fait l’objet d’ajout d’une nouvelle couche à l’image. 
+          Et les couches, moins on en a, mieux c’est pour la taille des images. 
+          Sachant qu’en plus, le nombre de couches a une limite (42 auparavant 
+          et 127 depuis peu). 
+          Même si la contrainte du nombre de lignes (ou couches) est quasiment 
+          écartée (si vous avez un Dockerfile avec 127 lignes, c’est qu’il y a 
+          un vrai problème !), regrouper les commandes facilite la 
+          compréhension du Dockerfile.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Un exemple à ne pas faire</h2>
+        <pre><code class="dockerfile">
+...
+RUN apt-get update
+RUN apt-get install -y curl
+RUN rm -rf /var/lib/apt/lists/*
+RUN curl -LO "https://nodejs.org/dist/v0.12.5/node-v0.12.5-linux-x64.tar.gz"
+RUN tar -xzf node-v0.12.5-linux-x64.tar.gz -C /usr/local --strip-components=1
+RUN rm node-v0.12.5-linux-x64.tar.gz
+...
+        </code></pre>
+        <aside class="notes">
+          Dans cet exemple chaque commande RUN ajoutera une couche à notre image final.<br>
+        </aside>
+      </section>
+      
+      <section>
+        <h2>Correction</h2>
+        <pre><code class="dockerfile">
+...
+RUN apt-get update \
+&& apt-get install -y curl \
+&& rm -rf /var/lib/apt/lists/*
+RUN curl -LO "https://nodejs.org/dist/v0.12.5/node-v0.12.5-linux-x64.tar.gz" \
+&& tar -xzf node-v0.12.5-linux-x64.tar.gz -C /usr/local --strip-components=1 \
+&& rm node-v0.12.5-linux-x64.tar.gz
+...
+        </code></pre>
+        <aside class="notes">
+          Dans la correction, toutes les conmmandes permettant l'installation de CURL ont 
+          été regroupées, et celles qui executent la commandes aussi.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Le mot clé <strong>ADD</strong></h2>
+        <blockquote>Il permet d'ajouter des fichiers locaux ou distants à l'intérieur de 
+          votre image.</blockquote>
+        <div class="side-by-side">
+          <figure class="">
+            <pre><code class="dockerfile">
+...
+ADD package.json /app/
+...
+            </code></pre>
+          </figure>
+          <figure class="explications">
+            cette commande ADD copie le fichier package.json dans le répertoire 
+            /app/ de notre future image.
+          </figure>
+        </div>
+        <aside class="notes">
+          Il est le plus souvent utilisé pour importer les sources de votre projet ou des 
+          fichiers de configuration.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Le mot clé <strong>WORKDIR</strong></h2>
+        <blockquote>Il permet de changer le répertoire courant de votre image.</blockquote>
+        <div class="side-by-side">
+          <figure class="">
+            <pre><code class="dockerfile">
+...
+WORKDIR /app
+...
+            </code></pre>
+          </figure>
+          <figure class="explications">
+            Toutes les commandes qui suivront seront exécutées à partir de ce répertoire /app.
+          </figure>
+        </div>
+        <aside class="notes">
+          
+        </aside>
+      </section>
+
+      <section>
+        <h2>Le mot clé <strong>EXPOSE</strong></h2>
+        <blockquote>Il permet d'indiquer quel port nous souhaitons ouvrir depuis l'extérieur de l'image.</blockquote>
+        <div class="side-by-side">
+          <figure class="">
+            <pre><code class="dockerfile">
+...
+EXPOSE 8080
+...
+            </code></pre>
+          </figure>
+          <figure class="explications">
+            Cette commande ouvrira le port 8080 depuis l'extérieur.<br>
+            Par défaut tous les ports sont fermés.<br>
+            Le port 8080 sera donc le seul port d'accès à notre application.<br>
+            Il est possible d'ouvrir plusieurs ports.
+          </figure>
+        </div>
+        <aside class="notes">
+          
+        </aside>
+      </section>
+
+      <section>
+        <h2>Le mot clé <strong>VOLUME</strong></h2>
+        <blockquote>Il permet d'indiquer quel dossier nous souhaitons partager.</blockquote>
+        <div class="side-by-side">
+          <figure class="">
+            <pre><code class="dockerfile">
+...
+VOLUME /app/log
+...
+            </code></pre>
+          </figure>
+          <figure class="explications">
+            L'instruction VOLUME crée un point de montage avec le nom spécifié.
+            Cette instruction permet la persistence des données en créant un volume sur le disque.
+            Ce volume peut être partagé entre container.
+          </figure>
+        </div>
+        <aside class="notes">
+          A noter que Docker ne supprimera jamais automatiquement un volume même si plus 
+          aucun conteneur n’y fait référence. Ce sera à vous de faire le ménage !
+        </aside>
+      </section>
+
+      <section>
+        <h2>Le mot clé <strong>ENV</strong></h2>
+        <blockquote>Il permet de dénir une variable d'environnement à l'intérieur de l'image</blockquote>
+        <div class="side-by-side">
+          <figure class="">
+            <pre><code class="dockerfile">
+...
+ENV LOGIN_POSTGRES postgres
+ENV PASS_POSTGRES="frozenCat"
+...
+            </code></pre>
+          </figure>
+          <figure class="explications">
+            Dans cet exemple, 2 variables d'environnements sont créées :
+            <ul>
+              <li>LOGIN_POSTGRES qui aura pour valeur "postgres"</li>
+              <li>PASS_POSTGRES qui aura pour valeur "frozenCat"</li>
+            </ul>
+          </figure>
+        </div>
+        <aside class="notes">
+          Cette instruction permet de transmettre efficacement des paramètres de configuration
+          personnalisés au code executé au lancement de l'image.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Le mot clé <strong>LABEL</strong></h2>
+        <blockquote>Il permet d'ajouter des métadonnées à la création de l'image.</blockquote>
+        <div class="side-by-side">
+          <figure class="">
+            <pre><code class="dockerfile">
+...
+LABEL maintener="Sylvain GRIPPON"
+LABEL email="sylvain@grippon.fr"
+...
+            </code></pre>
+          </figure>
+          <figure class="explications">
+            Cette instruction est utilisée pour tracer l'image :
+            <ul>
+              <li>A qui appartient cette image ?</li>
+              <li>Comment joindre le propriétaire ?</li>
+              <li>...</li>
+            </ul>
+            
+          </figure>
+        </div>
+        <aside class="notes">
+          
+        </aside>
+      </section>
+
+      <section>
+        <h2>Le mot clé <strong>USER</strong></h2>
+        <blockquote>L'instruction USER définit le nom d'utilisateur qui execturera les instructions RUN, CMD et ENTRYPOINT qui le suivent dans le Dockerfile.</blockquote>
+        <div class="side-by-side">
+          <figure class="">
+            <pre><code class="dockerfile">
+...
+USER postgres
+...
+            </code></pre>
+          </figure>
+          <figure class="explications">
+            Cette instruction définira le USER postgres comme étant celui qui executera les prochaines instructions.<br>
+            C'est l'équivalent de la commande shell<br>su - postgres
+          </figure>
+        </div>
+        <aside class="notes">
+          L'instruction USER définit le nom d'utilisateur (ou UID) et éventuellement le groupe d'utilisateurs (ou GID) à utiliser lors de l'exécution de l'image et pour toutes les instructions RUN, CMD et ENTRYPOINT qui le suivent dans le Dockerfile.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Le mot clé <strong></strong></h2>
+        <blockquote></blockquote>
+        <div class="side-by-side">
+          <figure class="">
+            <pre><code class="dockerfile">
+
+            </code></pre>
+          </figure>
+          <figure class="explications">
+            
+          </figure>
+        </div>
+        <aside class="notes">
+          
+        </aside>
+      </section>
+
+    </section>
+      <section>
+        <section>
+          <h1>Annexe</h1>
+          <img class="logo" src="ressources/images/logo_annexe.jpg" alt="Logo Annexe">
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            # Liens
+            - [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+            - [Dockerfile Best Practices](hhttps://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+            - [Dockerfile & Volumes](https://blog.moncoindunet.fr/docker/docker-volumes-donnees-12/)
+          </script>
+        </section>
+      </section>
+
+    </div>
+  </div>
+  <script src="../reveal-3.9.2/js/reveal.js"></script>
+
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+
+      transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+      // More info https://github.com/hakimel/reveal.js#dependencies
+      dependencies: [
+        {
+          src: '../reveal-3.9.2/plugin/markdown/marked.js'
+        },
+        {
+          src: '../reveal-3.9.2/plugin/markdown/markdown.js'
+        },
+        {
+          src: '../reveal-3.9.2/plugin/highlight/highlight.js',
+          async: true,
+          callback: function () {
+            hljs.initHighlightingOnLoad();
+          }
+        },
+        {
+          src: '../reveal-3.9.2/plugin/notes/notes.js',
+          async: true
+        }
+      ]
+    });
+  </script>
+</body>
+
+</html>
