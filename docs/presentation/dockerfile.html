@@ -104,13 +104,13 @@ RUN apt-get update \
         </div>
         <aside class="notes">
           Dans le Dockerfile, chaque commande (ADD, COPY, ENTRYPOINT, CMD, …) 
-          fait l’objet d’ajout d’une nouvelle couche à l’image. 
+          fait l’objet d’ajout d’une nouvelle couche à l’image.<br>
           Et les couches, moins on en a, mieux c’est pour la taille des images. 
           Sachant qu’en plus, le nombre de couches a une limite (42 auparavant 
           et 127 depuis peu). 
           Même si la contrainte du nombre de lignes (ou couches) est quasiment 
           écartée (si vous avez un Dockerfile avec 127 lignes, c’est qu’il y a 
-          un vrai problème !), regrouper les commandes facilite la 
+          un vrai problème !),<br>regrouper les commandes facilite la 
           compréhension du Dockerfile.
         </aside>
       </section>
@@ -146,7 +146,34 @@ RUN curl -LO "https://nodejs.org/dist/v0.12.5/node-v0.12.5-linux-x64.tar.gz" \
         </code></pre>
         <aside class="notes">
           Dans la correction, toutes les conmmandes permettant l'installation de CURL ont 
-          été regroupées, et celles qui executent la commandes aussi.
+          été regroupées, et celles qui executent la commandes CURL aussi.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Le mot clé <strong>COPY</strong></h2>
+        <blockquote>
+          Il ne prend en charge que la copie de base des fichiers locaux dans le conteneur.
+        </blockquote>
+        <div class="side-by-side">
+          <figure class="">
+            <pre><code class="dockerfile">
+...
+COPY config.txt /tmp/
+...
+            </code></pre>
+          </figure>
+          <figure class="explications">
+            Cette instruction copie simplement le fichier config.txt dans le 
+            répertoire /tmp/ de l'image.
+          </figure>
+        </div>
+        <aside class="notes">
+          Cette instruction ne prend en charge que la copie de base des fichiers 
+          locaux dans le conteneur, tandis que ADD possède certaines fonctionnalités
+          (comme l'extraction de tar local uniquement et la prise en charge d'URL à 
+          distance) qui ne sont pas immédiatement évidentes.<br>
+          COPY est à priviligier si une simple copie est réalisée.
         </aside>
       </section>
 
@@ -168,8 +195,13 @@ ADD package.json /app/
           </figure>
         </div>
         <aside class="notes">
-          Il est le plus souvent utilisé pour importer les sources de votre projet ou des 
-          fichiers de configuration.
+          L'instruction ADD fait donc la même chose que l'instruction COPY 
+          sur un simple fichier ou répertoire.<br>
+          La différence avec l'instruction COPY est qu'il peut aussi copier 
+          depuis une URL. Dans ce cas, docker se charge du téléchargement 
+          et de placer le fichier téléchargé dans le répertoire destination.<br>
+          Si la source est un fichier zippé et la destination un répertoire, 
+          docker dezzipe la source à la volée.
         </aside>
       </section>
 
@@ -195,7 +227,9 @@ WORKDIR /app
 
       <section>
         <h2>Le mot clé <strong>EXPOSE</strong></h2>
-        <blockquote>Il permet d'indiquer quel port nous souhaitons ouvrir depuis l'extérieur de l'image.</blockquote>
+        <blockquote>
+          Il permet d'indiquer quel port nous souhaitons ouvrir depuis l'extérieur de l'image.
+        </blockquote>
         <div class="side-by-side">
           <figure class="">
             <pre><code class="dockerfile">
@@ -206,8 +240,8 @@ EXPOSE 8080
           </figure>
           <figure class="explications">
             Cette commande ouvrira le port 8080 depuis l'extérieur.<br>
-            Par défaut tous les ports sont fermés.<br>
-            Le port 8080 sera donc le seul port d'accès à notre application.<br>
+            Par défaut tous les ports sont fermés. Le port 8080 sera donc 
+            le seul port d'accès à notre application.<br>
             Il est possible d'ouvrir plusieurs ports.
           </figure>
         </div>
@@ -218,7 +252,9 @@ EXPOSE 8080
 
       <section>
         <h2>Le mot clé <strong>VOLUME</strong></h2>
-        <blockquote>Il permet d'indiquer quel dossier nous souhaitons partager.</blockquote>
+        <blockquote>
+          Il permet d'indiquer quel dossier nous souhaitons partager.
+        </blockquote>
         <div class="side-by-side">
           <figure class="">
             <pre><code class="dockerfile">
@@ -234,14 +270,17 @@ VOLUME /app/log
           </figure>
         </div>
         <aside class="notes">
-          A noter que Docker ne supprimera jamais automatiquement un volume même si plus 
-          aucun conteneur n’y fait référence. Ce sera à vous de faire le ménage !
+          A noter que Docker ne supprimera jamais automatiquement un volume 
+          même si plus aucun conteneur n’y fait référence.<br>
+          Ce sera à vous de faire le ménage !
         </aside>
       </section>
 
       <section>
         <h2>Le mot clé <strong>ENV</strong></h2>
-        <blockquote>Il permet de dénir une variable d'environnement à l'intérieur de l'image</blockquote>
+        <blockquote>
+          Il permet de dénir une variable d'environnement à l'intérieur de l'image.
+        </blockquote>
         <div class="side-by-side">
           <figure class="">
             <pre><code class="dockerfile">
@@ -260,14 +299,16 @@ ENV PASS_POSTGRES="frozenCat"
           </figure>
         </div>
         <aside class="notes">
-          Cette instruction permet de transmettre efficacement des paramètres de configuration
-          personnalisés au code executé au lancement de l'image.
+          Cette instruction permet de transmettre efficacement des paramètres 
+          de configuration personnalisés au code executé au lancement de l'image.
         </aside>
       </section>
 
       <section>
         <h2>Le mot clé <strong>LABEL</strong></h2>
-        <blockquote>Il permet d'ajouter des métadonnées à la création de l'image.</blockquote>
+        <blockquote>
+          Il permet d'ajouter des métadonnées à la création de l'image.
+        </blockquote>
         <div class="side-by-side">
           <figure class="">
             <pre><code class="dockerfile">
@@ -294,7 +335,10 @@ LABEL email="sylvain@grippon.fr"
 
       <section>
         <h2>Le mot clé <strong>USER</strong></h2>
-        <blockquote>L'instruction USER définit le nom d'utilisateur qui execturera les instructions RUN, CMD et ENTRYPOINT qui le suivent dans le Dockerfile.</blockquote>
+        <blockquote>
+          Il définit le nom d'utilisateur qui execturera les instructions 
+          RUN, CMD et ENTRYPOINT qui le suivent dans le Dockerfile.
+        </blockquote>
         <div class="side-by-side">
           <figure class="">
             <pre><code class="dockerfile">
@@ -304,26 +348,68 @@ USER postgres
             </code></pre>
           </figure>
           <figure class="explications">
-            Cette instruction définira le USER postgres comme étant celui qui executera les prochaines instructions.<br>
-            C'est l'équivalent de la commande shell<br>su - postgres
+            Cette instruction définira le USER postgres comme étant celui qui executera 
+            les prochaines instructions.<br>
+            C'est l'équivalent de la commande shell<br>
+            <pre><code class="shell">
+su - postgres
+            </code></pre>
           </figure>
         </div>
         <aside class="notes">
-          L'instruction USER définit le nom d'utilisateur (ou UID) et éventuellement le groupe d'utilisateurs (ou GID) à utiliser lors de l'exécution de l'image et pour toutes les instructions RUN, CMD et ENTRYPOINT qui le suivent dans le Dockerfile.
+          L'instruction USER définit le nom d'utilisateur (ou UID) et 
+          éventuellement le groupe d'utilisateurs (ou GID) à utiliser 
+          lors de l'exécution de l'image et pour toutes les instructions 
+          RUN, CMD et ENTRYPOINT qui le suivent dans le Dockerfile.
         </aside>
       </section>
 
       <section>
-        <h2>Le mot clé <strong></strong></h2>
-        <blockquote></blockquote>
+        <h2>Le mot clé <strong>CMD</strong></h2>
+        <blockquote>
+          Il est utilisé pour définir la commande executée au démarrage du 
+          container.
+        </blockquote>
         <div class="side-by-side">
           <figure class="">
             <pre><code class="dockerfile">
-
+...
+CMD ["/bin/echo", "My first command !"]
             </code></pre>
           </figure>
           <figure class="explications">
-            
+            Cette instruction executera cette ligne de commande à l'intérieur du container :
+            <pre><code class="shell">
+/bin/echo "My first command !"
+            </code></pre>
+          </figure>
+        </div>
+        <aside class="notes">
+          Le but principal d'un CMD est de fournir des valeurs par défaut pour un 
+          conteneur en cours d'exécution. Ces valeurs par défaut peuvent inclure 
+          un exécutable, ou elles peuvent omettre l'exécutable, auquel cas vous 
+          devez également spécifier une instruction ENTRYPOINT.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Le mot clé <strong>ENTRYPOINT</strong></h2>
+        <blockquote>
+          Il est utilisé pour configurer un container au démarrage.
+        </blockquote>
+        <div class="side-by-side">
+          <figure class="">
+            <pre><code class="dockerfile">
+...
+ENTRYPOINT ["/bin/echo"]
+CMD ["My first command !"]
+            </code></pre>
+          </figure>
+          <figure class="explications">
+            Cette instruction executera cette ligne de commande à l'intérieur du container :
+            <pre><code class="shell">
+/bin/echo "My first command !"
+            </code></pre>
           </figure>
         </div>
         <aside class="notes">
@@ -331,6 +417,44 @@ USER postgres
         </aside>
       </section>
 
+      <section>
+        <h2><strong>ENTRYPOINT</strong> & <strong>CMD</strong></h2>
+        <table style="font-size: 0.5em;">
+          <thead>
+            <td></td>
+            <td style="text-align: center;">No<br>ENTRYPOINT</td>
+            <td>ENTRYPOINT<br>exec_entry p1_entry</td>
+            <td>ENTRYPOINT<br>[“exec_entry”, “p1_entry”]</td>
+          </thead>
+          <tbody>
+            <tr>
+              <td>No CMD</td>
+              <td>error, not allowed</td>
+              <td>/bin/sh -c exec_entry p1_entry</td>
+              <td>exec_entry p1_entry</td>
+            </tr>
+            <tr>
+              <td>CMD [“exec_cmd”, “p1_cmd”]</td>
+              <td>exec_cmd p1_cmd</td>
+              <td>/bin/sh -c exec_entry p1_entry</td>
+              <td>exec_entry p1_entry exec_cmd p1_cmd</td>
+            </tr>
+            <tr>
+              <td>CMD [“p1_cmd”, “p2_cmd”]</td>
+              <td>p1_cmd p2_cmd</td>
+              <td>/bin/sh -c exec_entry p1_entry</td>
+              <td>exec_entry p1_entry p1_cmd p2_cmd</td>
+            </tr>
+            <tr>
+              <td>CMD exec_cmd p1_cmd</td>
+              <td>/bin/sh -c exec_cmd p1_cmd</td>
+              <td>/bin/sh -c exec_entry p1_entry</td>
+              <td>exec_entry p1_entry /bin/sh -c exec_cmd p1_cmd</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+        
     </section>
       <section>
         <section>
@@ -342,6 +466,7 @@ USER postgres
             # Liens
             - [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
             - [Dockerfile Best Practices](hhttps://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+            - [Dockerfile precisions](https://www.arolla.fr/blog/2016/09/quelques-precisions-dockerfile/)
             - [Dockerfile & Volumes](https://blog.moncoindunet.fr/docker/docker-volumes-donnees-12/)
           </script>
         </section>

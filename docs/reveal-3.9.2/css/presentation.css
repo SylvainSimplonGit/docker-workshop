@@ -63,3 +63,7 @@ span.code-font {
 .reveal .logo {
   max-width: 50%;
 }
+
+#table_entrypoint-cmd table {
+  font-size: 0.5em;
+}
