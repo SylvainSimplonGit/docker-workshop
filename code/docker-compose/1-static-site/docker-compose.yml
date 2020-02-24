@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  web-nginx-html:
+    image: nginx:stable-alpine
+    container_name: web-nginx-html
+    volumes:
+      - "./docker-web/www:/usr/share/nginx/html:ro"
+      - "./docker-web/log:/var/log/nginx"
+      - "./docker-web/nginx.conf:/etc/nginx/nginx.conf:ro"
+    ports:
+      - "127.0.0.1:80:80"
