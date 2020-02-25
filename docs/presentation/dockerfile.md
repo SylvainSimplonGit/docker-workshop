@@ -57,9 +57,7 @@ FROM debian:jessie
 ...
 ```
 
-Un Dockerfile **doit** avoir **une et une seule** instruction **FROM**.
-
-L'instruction **FROM** ne peut être précédé **que par une ou plusieurs** instructions **ARG**, qui déclarent les arguments utilisés dans les lignes **FROM** du Dockerfile.
+Avant la version v17.05 de Docker, un Dockerfile **ne devait** avoir **une et une seule** instruction **FROM**. Depuis la v17.05 de Docekr, il est possible de créer un Dockerfile "multi-stage".
 
 ## Le mot clé **RUN**
 

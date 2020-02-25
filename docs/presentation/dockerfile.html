@@ -57,8 +57,7 @@ CMD node server.js
         </section>
         <section>
           <h2>Le mot clé <strong>FROM</strong></h2>
-          <blockquote>Il définit notre image de base,<br>
-              vous ne pouvez l'utiliser qu'une fois dans un Dockerfile.</blockquote>
+          <blockquote>Il définit notre image de base.</blockquote>
           <div class="side-by-side">
             <figure class="">
               <pre><code class="dockerfile">
@@ -67,7 +66,7 @@ FROM debian:jessie
             </code></pre>
             </figure>
             <figure class="explications">
-              Il doit être utiliser<br><strong>au tout début</strong><br>de votre fichier.
+              Il doit être utiliser<br><strong>avant les autres</strong><br> instructions de votre fichier.
             </figure>
           </div>
           <aside class="notes">
@@ -77,6 +76,8 @@ FROM debian:jessie
             L'instruction FROM spécifie l'image parente à partir de laquelle vous créez votre nouvelle image. <br>
             FROM ne peut être précédé que par une ou plusieurs instructions ARG, <br>
             qui déclarent les arguments utilisés dans les lignes FROM du Dockerfile.
+            Depuis la v17.05 de Docker, il est possible d'avoir un Dockerfile multi-stage permettant 
+            la création d'image plus complexe.
           </aside>
         </section>
 
