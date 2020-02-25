@@ -1,10 +1,24 @@
 # Exemple de site statique avec un Dockerfile
 
+## Prérequis
+
+- [Installation de Docker](../../../docs/installation/docker_install.html)
+- Vérifier que Docker est lancé :
+
+  ```shell
+  # La commande suivante :
+  $ docker -v
+
+  # doit vous retourner :
+  Docker version 19.03.5, build 633a0ea
+  ```
+
 ## Construire l'image
 
 Pour construire l'image depuis le fichier Dockerfile, executez la commande suivante :
 
 ```shell
+# Construction de l'image
 $ docker build -t dockerfiles/static-site:latest .
 ```
 
@@ -15,16 +29,17 @@ Cette commande construira une image nommée `dockerfiles/static-site` depuis le 
 Dans un terminal, executer la commande suivante :
 
 ```shell
-$ docker ls -a
+# Lister les images locales
+$ docker image ls
 ```
 
 Vous deriez voir l'image `dockerfiles/static-site` :
 
 ```shell
-$ docker ps -a
-CONTAINER ID        IMAGE                     COMMAND                  CREATED              STATUS                       PORTS               NAMES
+$ docker image ls
+REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
 ...
-c167e9c97e7d        dockerfiles/static-site   "/bin/sh -c 'cd /usr…"   About a minute ago   Up About a minute            80/tcp              cool_pare
+dockerfiles/static-site    latest              c33537990c28        20 hours ago        127MB
 ...
 ```
 

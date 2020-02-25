@@ -1,5 +1,18 @@
 # Exemple de site statique HTML avec un Docker Compose
 
+## Prérequis
+
+- [Installation de Docker](../../../docs/installation/docker_install.html)
+- Vérifier que Docker est lancé :
+
+  ```shell
+  # La commande suivante :
+  $ docker -v
+
+  # doit vous retourner :
+  Docker version 19.03.5, build 633a0ea
+  ```
+
 ## Lancer le service
 
 Pour démarrer le container depuis l'image créée, executer la commande suivante dans un terminal :
