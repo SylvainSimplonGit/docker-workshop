@@ -64,6 +64,10 @@ span.code-font {
   max-width: 50%;
 }
 
+.reveal .logo70 {
+  max-width: 70%;
+}
+
 #table_entrypoint-cmd table {
   font-size: 0.5em;
 }
