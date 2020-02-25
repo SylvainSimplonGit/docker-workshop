@@ -291,6 +291,6 @@ Voici les différents effets en fonction de l'écriture du couple **ENTRYPOINT**
 ### Liens
 
 - [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
-- [Dockerfile Best Practices](hhttps://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+- [Dockerfile Best Practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 - [Dockerfile precisions](https://www.arolla.fr/blog/2016/09/quelques-precisions-dockerfile/)
 - [Dockerfile & Volumes](https://blog.moncoindunet.fr/docker/docker-volumes-donnees-12/)
