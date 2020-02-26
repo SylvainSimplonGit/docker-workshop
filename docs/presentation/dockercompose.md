@@ -8,25 +8,20 @@ Ensuite, avec une seule commande, vous créez et démarrez tous les services à 
 
 Pour en savoir plus sur toutes les fonctionnalités de Compose, consultez la liste des fonctionnalités.
 
-## Table of Contents
+## Sommaire <!-- omit in toc -->
 
-<details>
-  <summary>Cliquer pour afficher</summary>
-
-1. [Docker Compose exemple](#docker-Compose-exemple)
-1. [Le mot clé **version**](#le-mot-clé-version)
-1. [Le mot clé **services**](#le-mot-clé-services)
-1. [Le mot clé **build**](#le-mot-clé-build)
-1. [Le mot clé **image**](#le-mot-clé-image)
-1. [Le mot clé **container_name**](#le-mot-clé-container_name)
-1. [Le mot clé **restart**](#le-mot-clé-restart)
-1. [Le mot clé **ports**](#le-mot-clé-ports)
-1. [Le mot clé **environment**](#le-mot-clé-environment)
-1. [Le mot clé **volumes**](#le-mot-clé-volumes)
-1. [Le mot clé **networks**](#le-mot-clé-networks)
-1. [Annexe](#annexe)
-
-</details>
+- [Docker Compose exemple](#docker-compose-exemple)
+- [Le mot clé **version**](#le-mot-clé-version)
+- [Le mot clé **services**](#le-mot-clé-services)
+- [Le mot clé **build**](#le-mot-clé-build)
+- [Le mot clé **image**](#le-mot-clé-image)
+- [Le mot clé **container_name**](#le-mot-clé-container_name)
+- [Le mot clé **restart**](#le-mot-clé-restart)
+- [Le mot clé **ports**](#le-mot-clé-ports)
+- [Le mot clé **environment**](#le-mot-clé-environment)
+- [Le mot clé **volumes**](#le-mot-clé-volumes)
+- [Le mot clé **networks**](#le-mot-clé-networks)
+- [Annexe](#annexe)
 
 ## Docker Compose exemple
 

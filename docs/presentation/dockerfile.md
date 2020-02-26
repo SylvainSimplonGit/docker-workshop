@@ -6,28 +6,26 @@ Docker exécute les instructions d'un Dockerfile séquentiellement. Chaque instr
 
 Le fichier Dockerfile n'a pas d'extension et se situe en général à la racine de votre projet.
 
-## Table of Contents
+## Sommaire <!-- omit in toc -->
 
-<details>
-  <summary>Cliquer pour afficher</summary>
-
-1. [Dockerfile exemple](#dockerfile-exemple)
-1. [Le mot clé **FROM**](#le-mot-clé-FROM)
-1. [Le mot clé **RUN**](#le-mot-clé-RUN)
-1. [Le mot clé **COPY**](#le-mot-clé-COPY)
-1. [Le mot clé **ADD**](#le-mot-clé-ADD)
-1. [Le mot clé **WORKDIR**](#le-mot-clé-WORKDIR)
-1. [Le mot clé **EXPOSE**](#le-mot-clé-EXPOSE)
-1. [Le mot clé **VOLUME**](#le-mot-clé-VOLUME)
-1. [Le mot clé **ENV**](#le-mot-clé-ENV)
-1. [Le mot clé **LABEL**](#le-mot-clé-LABEL)
-1. [Le mot clé **USER**](#le-mot-clé-USER)
-1. [Le mot clé **CMD**](#le-mot-clé-CMD)
-1. [Le mot clé **ENTRYPOINT**](#le-mot-clé-ENTRYPOINT)
-1. [Comparaison **ENTRYPOINT** / **CMD**](#comparaison-ENTRYPOINT-/-CMD)
-1. [Annexe](#annexe)
-
-</details>
+- [Dockerfile exemple](#dockerfile-exemple)
+- [Le mot clé **FROM**](#le-mot-clé-from)
+- [Le mot clé **RUN**](#le-mot-clé-run)
+- [Le mot clé **COPY**](#le-mot-clé-copy)
+- [Le mot clé **ADD**](#le-mot-clé-add)
+- [Le mot clé **WORKDIR**](#le-mot-clé-workdir)
+- [Le mot clé **EXPOSE**](#le-mot-clé-expose)
+- [Le mot clé **VOLUME**](#le-mot-clé-volume)
+- [Le mot clé **ENV**](#le-mot-clé-env)
+- [Le mot clé **LABEL**](#le-mot-clé-label)
+- [Le mot clé **USER**](#le-mot-clé-user)
+- [Le mot clé **CMD**](#le-mot-clé-cmd)
+- [Le mot clé **ENTRYPOINT**](#le-mot-clé-entrypoint)
+- [Effets **ENTRYPOINT** & **CMD**](#effets-entrypoint--cmd)
+- [Construction d'une image](#construction-dune-image)
+- [Lancement du image](#lancement-du-image)
+- [Arrêt du container](#arrêt-du-container)
+- [Annexe](#annexe)
 
 ## Dockerfile exemple
 
@@ -77,7 +75,7 @@ cette commande nous permet :
 - d'installer curl sans validation
 - de nettoyer le gestionnaire de paquets
 
-Dans le Dockerfile, chaque commande (ADD, COPY, ENTRYPOINT, CMD, …) fait l’objet d’ajout d’une nouvelle couche à l’image. Et les couches, moins on en a, mieux c’est pour la taille des images. 
+Dans le Dockerfile, chaque commande (ADD, COPY, ENTRYPOINT, CMD, …) fait l’objet d’ajout d’une nouvelle couche à l’image. Et les couches, moins on en a, mieux c’est pour la taille des images.
 
 Sachant qu’en plus, le nombre de couches a une limite (42 auparavant et 127 depuis peu), même si la contrainte du nombre de lignes (ou couches) est quasiment écartée (*si vous avez un Dockerfile avec 127 lignes, c’est qu’il y a un vrai problème !*), regrouper les commandes facilite la compréhension du Dockerfile.
 
