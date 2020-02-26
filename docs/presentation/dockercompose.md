@@ -219,7 +219,7 @@ La variable d'environnement MYSQL_DATABASE aura pour valeur `your_database_name`
 
 [Documentation officielle](https://docs.docker.com/compose/compose-file/#volumes)
 
-Il permet de monter des répertoire ou des volumes nommés pour le partage de données entre services ou pour la persistence des données.
+Il permet de monter des répertoires ou des volumes nommés pour le partage de données entre services ou pour la persistence des données.
 
 ```yaml
 volumes:

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Docker Compose explications</title>
+  <link rel="icon" href="ressources/images/favicon-32x32.png" />
+  <link rel="stylesheet" href="../reveal-3.9.2/css/theme/simple.css" id="theme">
+  <link rel="stylesheet" href="../reveal-3.9.2/css/presentation.css">
+  <link rel="stylesheet" href="../reveal-3.9.2/css/reveal.css">
+  <link rel="stylesheet" href="../reveal-3.9.2/lib/css/monokai.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? '../reveal-3.9.2/css/print/pdf.css' :
+      '../reveal-3.9.2/css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <!-- Wrap the entire slide show in a div using the "reveal" class. -->
+  <div class="reveal">
+    <!-- Wrap all slides in a single "slides" class -->
+    <div class="slides">
+
+      <!-- ALL SLIDES GO HERE -->
+      <!-- Each section element contains an individual slide -->
+      <section>
+        <section>
+          <h1>Docker Compose</h1>
+          <img class="logo" src="ressources/images/horizontal-logo-monochromatic-white.png" alt="Logo Docker">
+        </section>
+        <section>
+          <h2>docker-compose<br><strong>vs</strong><br>dockerfile</h2>
+        </section>
+        <section>
+          <h2>docker-compose</h2>
+          Docker Compose permet l'utilisation de multi services plus complexe qu'avec
+          l'utilisation de Dockerfile
+        </section>
+        <section>
+          <h2>exemple d'utilisation</h2>
+          <img class="logo70" src="ressources/images/docker-services.jpg" alt="Utilisation de Docker Compose">
+          <aside class="notes">
+            Dans cet exemple, on peut voir 3 applications :
+            <ul>
+              <li>
+                </strong>Traefik</strong> : est un reverse-proxy et un load-balancer fait pour
+                déployer principalement des microservices. Il permettra depuis une
+                URL "projet-a.dev" de rediriger le flux vers la bonne application
+              </li>
+              <li></strong>Le projet A</strong> : qui a son propore sous réseau 172.19.0.0/16
+                (toutes IP ayant le radical 172.19.x.x appartient à ce sous réseau) et ces
+                4 services :
+                <ul>
+                  <li>HTTP</li>
+                  <li>PHP</li>
+                  <li>REDIS</li>
+                  <li>MYSQL</li>
+                </ul>
+              </li>
+              <li></strong>Le projet A</strong> : idem que l'application A en changeant le sous
+                réseau 172.20.0.0/16</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Dockerfile exemple</h2>
+          <pre><code class="yaml">
+version: '3'
+services:
+  web-php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: php:fpm-alpine
+    container_name: web-php
+    restart: unless-stopped
+    volumes:
+        - "./docker-web/www:/script:ro"
+    networks:
+      - web-network
+networks:
+  web-network:
+    driver: bridge
+          </code></pre>
+          <aside class="notes">
+            Avec Compose, vous utilisez un fichier YAML pour configurer les services de votre
+            application. Il est donc très important de faire attention à l'indentation du fichier.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>version</strong></h2>
+          <blockquote>Il définit la version de la syntaxe utilisé pour le fichier docker-compose.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="yaml">
+  version: '3'
+  ...
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              cette commande nous permet définir l'utilisation des commandes docker
+              compose en version 3
+            </figure>
+          </div>
+          <aside class="notes">
+            Docker compose évoluant, il peut s'avérer que la syntaxe et le résultat de certains
+            mots clé évolue en fonction des versions. Il est donc nécessaire de se référer à la
+            documentation officielle de la version.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>services</strong></h2>
+          <blockquote>Il définit une section décrivant les services à exécuter. C'est ce mot clé
+            qui répété pourra vous permettre de lancer plusieurs container liés entre eux.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="yaml">
+...
+  services:
+    web-php:
+...
+    web-nginx:
+...
+          </code></pre>
+            </figure>
+            <figure class="explications">
+              Dans cette exemple, 2 services seront lancés lors de l'excution du fichier
+              docker-compose.yml :
+              <ul>
+                <li>web-php</li>
+                <li>web-nginx</li>
+              </ul>
+
+            </figure>
+          </div>
+          <aside class="notes">
+            Dans cette exemple, 2 services seront lancés lors de l'excution du fichier
+            docker-compose.yml. Pour lancer ces services, Docker lancera 3 containers qui
+            proteront les noms suivants :
+            <ul>
+              <li>web-php</li>
+              <li>web-nginx</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>build</strong></h2>
+          <blockquote>Il permet de construire son image depuis un fichier Dockerfile.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="yaml">
+...
+    build:
+      context: .
+      dockerfile: Dockerfile
+...
+          </code></pre>
+            </figure>
+            <figure class="explications">
+              Il peut avoir comme propriété :
+              <ul>
+                <li>context</li>
+                <li>dockerfile</li>
+                <li>args</li>
+              </ul>
+            </figure>
+          </div>
+          <aside class="notes">
+            <u>Le mot clé context :</u><br>
+            Il permet de définir l'emplacement du fichier Dockerfile à utiliser pour la commande build.
+            <br>
+            <u>Le mot clé dockerfile :</u><br>
+            Il permet de définir le nom du fichier Dockerfile à utiliser pour la commande build.
+            <br>
+            <u>Le mot clé args :</u><br>
+            Il permet de surcharger le mot clé build avec des arguments.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>image</strong></h2>
+          <blockquote>Il permet de définir l'image dont héritera le service.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="yaml">
+...
+    image: php:fpm-alpine
+...
+          </code></pre>
+            </figure>
+            <figure class="explications">
+              Ici l'image construite héritera de l'image <strong>php</strong> ayant le
+              tag <strong>fpm-alpine</strong>
+            </figure>
+          </div>
+          <aside class="notes">
+            Situé juste après le mot clé build, il définira le nom de l'image construite.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>container_name</strong></h2>
+          <blockquote>
+            Il permet de définir le nom du container qui sera lancé pour le service.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="yaml">
+...
+services:
+  web-php:
+    ...
+    container_name: web-php-app
+...
+          </code></pre>
+            </figure>
+            <figure class="explications">
+              Ici le container qui hebergera le service <strong>web-php</strong> portera le
+              nom <strong>web-php-app</strong>
+            </figure>
+          </div>
+          <aside class="notes">
+            Cette propriété est particulièrement utilise pour préfixer tous les services
+            d'une application (App, Server Web, DB, ...).
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>restart</strong></h2>
+          <blockquote>Il permet de gérer le redémarrage du service en fonction des états
+            de sortie du container.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="yaml">
+...
+  web-nginx:
+    restart: unless-stopped
+...
+          </code></pre>
+            </figure>
+            <figure class="explications">
+              Ici le service web-nginx sera redémarrer uniquement si le service n'a pas
+              été arrêté manuellement.
+            </figure>
+          </div>
+          <aside class="notes">
+            Il peut avoir les valeurs suivantes :
+            <ul>
+              <li>no</li>
+              <ul>
+                <li>Pas de relance du service.</li>
+              </ul>
+              <li>always</li>
+              <ul>
+                <li>Le service sera relancé quelque soit la sortie du container. Utile pour des outils de supervision
+                  (Portainer) ou de routage (Traefik).</li>
+              </ul>
+              <li>on-failure</li>
+              <ul>
+                <li>le service sera redémarré uniquement lors d'une sortie du code sur erreur.</li>
+              </ul>
+              <li>unless-stopped</li>
+              <ul>
+                <li>Le service sera redémarré uniquement si le service n'a pas été arrêté manuellement.</li>
+              </ul>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>ports</strong></h2>
+          <blockquote>
+            Il permet d'exposer des ports internes au container vers l'extérieur.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="yaml">
+...
+  web-nginx:
+  ...
+  ports:
+    - "80:80"
+    - "443:443"
+...
+          </code></pre>
+            </figure>
+            <figure class="explications">
+              Ici le service web-nginx exposera ces ports 80 et 443 à l'extérieur du container.
+            </figure>
+          </div>
+          <aside class="notes">
+            Il est possible de rediriger un port interne vers un autre port. Il existe une
+            syntaxe courte et longue où chaque propriété pourra être définie.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>environment</strong></h2>
+          <blockquote>
+            Il permet d'ajouter des variables d'environnement dans le container utilisé par
+            le service.
+          </blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="yaml">
+...
+  web-db:
+    environment:
+      MYSQL_DATABASE: your_database_name
+      MYSQL_ROOT_PASSWORD: your_mysql_root_password
+...
+          </code></pre>
+            </figure>
+            <figure class="explications">
+              Ici 2 variables d'environnement seront créées et leur valeur sera définie.
+            </figure>
+          </div>
+          <aside class="notes">
+
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>volumes</strong></h2>
+          <blockquote>
+            Il permet de monter des répertoires ou des volumes nommés pour le partage de
+             données entre services ou pour la persistence des données.
+          </blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="yaml">
+...
+  web-db:
+    ...
+    volumes:
+      - ./docker-web/data:/var/lib/mysql
+...
+          </code></pre>
+            </figure>
+            <figure class="explications">
+              Ici le répertoire relatif <strong>docker-web/data</strong> de l'hôte sera lié 
+              au répertoire interne <strong>/var/lib/mysql</strong>.
+            </figure>
+          </div>
+          <aside class="notes">
+            Lorsque l'on souhaite pouvoir partager des données via un volume entre les services, 
+            il faudra nommé le volume au niveau le plus haut.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>networks</strong></h2>
+          <blockquote>Il permet de créé un réseau interne aux différents service de l'application.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="yaml">
+...
+  web-php:
+    networks:
+      - web-network
+  web-nginx:
+    networks:
+      - web-network
+networks:
+  web-network:
+    driver: bridge
+...
+          </code></pre>
+            </figure>
+            <figure class="explications">
+              Dans cet exemple, les services web-php, web-nginx seront tous démarré dans un 
+              réseau interne facilitant ainsi les flux entre eux.
+            </figure>
+          </div>
+          <aside class="notes">
+
+          </aside>
+        </section>
+
+      </section>
+
+      <section>
+        <section>
+          <h1>Annexe</h1>
+          <img class="logo" src="ressources/images/logo_annexe.jpg" alt="Logo Annexe">
+        </section>
+        <section data-markdown data-separator="---">
+          <script type="text/template">
+            # Liens
+            - [Docker Compose Overview](https://docs.docker.com/compose/)
+          </script>
+        </section>
+      </section>
+
+    </div>
+  </div>
+  <script src="../reveal-3.9.2/js/reveal.js"></script>
+
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      layout: 'Tall',
+
+      transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+      // More info https://github.com/hakimel/reveal.js#dependencies
+      dependencies: [{
+          src: '../reveal-3.9.2/plugin/markdown/marked.js'
+        },
+        {
+          src: '../reveal-3.9.2/plugin/markdown/markdown.js'
+        },
+        {
+          src: '../reveal-3.9.2/plugin/highlight/highlight.js',
+          async: true,
+          callback: function () {
+            hljs.initHighlightingOnLoad();
+          }
+        },
+        {
+          src: '../reveal-3.9.2/plugin/notes/notes.js',
+          async: true
+        }
+      ]
+    });
+  </script>
+</body>
+
+</html>
