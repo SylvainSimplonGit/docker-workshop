@@ -33,6 +33,7 @@
           <h1>Dockerfile</h1>
           <img class="logo" src="ressources/images/horizontal-logo-monochromatic-white.png" alt="Logo Docker">
         </section>
+
         <section>
           <h2>Dockerfile exemple</h2>
           <pre><code class="dockerfile">
@@ -55,6 +56,7 @@ CMD node server.js
             Docker exécute les instructions dans un Dockerfile dans l'ordre.<br>
           </aside>
         </section>
+
         <section>
           <h2>Le mot clé <strong>FROM</strong></h2>
           <blockquote>Il définit notre image de base.</blockquote>
@@ -76,49 +78,50 @@ FROM debian:jessie
             L'instruction FROM spécifie l'image parente à partir de laquelle vous créez votre nouvelle image. <br>
             FROM ne peut être précédé que par une ou plusieurs instructions ARG, <br>
             qui déclarent les arguments utilisés dans les lignes FROM du Dockerfile.
-            Depuis la v17.05 de Docker, il est possible d'avoir un Dockerfile multi-stage permettant 
+            Depuis la v17.05 de Docker, il est possible d'avoir un Dockerfile multi-stage permettant
             la création d'image plus complexe.
           </aside>
         </section>
 
-      <section>
-        <h2>Le mot clé <strong>RUN</strong></h2>
-        <blockquote>Il permet d'exécuter une commande à l'intérieur de votre image comme si vous étiez devant un shell unix.</blockquote>
-        <div class="side-by-side">
-          <figure class="">
-            <pre><code class="dockerfile">
+        <section>
+          <h2>Le mot clé <strong>RUN</strong></h2>
+          <blockquote>Il permet d'exécuter une commande à l'intérieur de votre image comme si vous étiez devant un shell
+            unix.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
 ...
 RUN apt-get update \
 && apt-get install -y curl \
 && rm -rf /var/lib/apt/lists/*
 ...
           </code></pre>
-          </figure>
-          <figure class="explications">
-            cette commande nous permet :
-            <ul>
-              <li>de mettre à jour la base de paquets</li>
-              <li>d'installer curl sans validation</li>
-              <li>de nettoyer le gestionnaire de paquets</li>
-            </ul>
-          </figure>
-        </div>
-        <aside class="notes">
-          Dans le Dockerfile, chaque commande (ADD, COPY, ENTRYPOINT, CMD, …) 
-          fait l’objet d’ajout d’une nouvelle couche à l’image.<br>
-          Et les couches, moins on en a, mieux c’est pour la taille des images. 
-          Sachant qu’en plus, le nombre de couches a une limite (42 auparavant 
-          et 127 depuis peu). 
-          Même si la contrainte du nombre de lignes (ou couches) est quasiment 
-          écartée (si vous avez un Dockerfile avec 127 lignes, c’est qu’il y a 
-          un vrai problème !),<br>regrouper les commandes facilite la 
-          compréhension du Dockerfile.
-        </aside>
-      </section>
+            </figure>
+            <figure class="explications">
+              cette commande nous permet :
+              <ul>
+                <li>de mettre à jour la base de paquets</li>
+                <li>d'installer curl sans validation</li>
+                <li>de nettoyer le gestionnaire de paquets</li>
+              </ul>
+            </figure>
+          </div>
+          <aside class="notes">
+            Dans le Dockerfile, chaque commande (ADD, COPY, ENTRYPOINT, CMD, …)
+            fait l’objet d’ajout d’une nouvelle couche à l’image.<br>
+            Et les couches, moins on en a, mieux c’est pour la taille des images.
+            Sachant qu’en plus, le nombre de couches a une limite (42 auparavant
+            et 127 depuis peu).
+            Même si la contrainte du nombre de lignes (ou couches) est quasiment
+            écartée (si vous avez un Dockerfile avec 127 lignes, c’est qu’il y a
+            un vrai problème !),<br>regrouper les commandes facilite la
+            compréhension du Dockerfile.
+          </aside>
+        </section>
 
-      <section>
-        <h2>Un exemple à ne pas faire</h2>
-        <pre><code class="dockerfile">
+        <section>
+          <h2>Un exemple à ne pas faire</h2>
+          <pre><code class="dockerfile">
 ...
 RUN apt-get update
 RUN apt-get install -y curl
@@ -128,14 +131,14 @@ RUN tar -xzf node-v0.12.5-linux-x64.tar.gz -C /usr/local --strip-components=1
 RUN rm node-v0.12.5-linux-x64.tar.gz
 ...
         </code></pre>
-        <aside class="notes">
-          Dans cet exemple chaque commande RUN ajoutera une couche à notre image final.<br>
-        </aside>
-      </section>
-      
-      <section>
-        <h2>Correction</h2>
-        <pre><code class="dockerfile">
+          <aside class="notes">
+            Dans cet exemple chaque commande RUN ajoutera une couche à notre image final.<br>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Correction</h2>
+          <pre><code class="dockerfile">
 ...
 RUN apt-get update \
 && apt-get install -y curl \
@@ -145,318 +148,497 @@ RUN curl -LO "https://nodejs.org/dist/v0.12.5/node-v0.12.5-linux-x64.tar.gz" \
 && rm node-v0.12.5-linux-x64.tar.gz
 ...
         </code></pre>
-        <aside class="notes">
-          Dans la correction, toutes les conmmandes permettant l'installation de CURL ont 
-          été regroupées, et celles qui executent la commandes CURL aussi.
-        </aside>
-      </section>
+          <aside class="notes">
+            Dans la correction, toutes les conmmandes permettant l'installation de CURL ont
+            été regroupées, et celles qui executent la commandes CURL aussi.
+          </aside>
+        </section>
 
-      <section>
-        <h2>Le mot clé <strong>COPY</strong></h2>
-        <blockquote>
-          Il ne prend en charge que la copie de base des fichiers locaux dans le conteneur.
-        </blockquote>
-        <div class="side-by-side">
-          <figure class="">
-            <pre><code class="dockerfile">
+        <section>
+          <h2>Le mot clé <strong>COPY</strong></h2>
+          <blockquote>
+            Il ne prend en charge que la copie de base des fichiers locaux dans le conteneur.
+          </blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
 ...
 COPY config.txt /tmp/
 ...
             </code></pre>
-          </figure>
-          <figure class="explications">
-            Cette instruction copie simplement le fichier config.txt dans le 
-            répertoire /tmp/ de l'image.
-          </figure>
-        </div>
-        <aside class="notes">
-          Cette instruction ne prend en charge que la copie de base des fichiers 
-          locaux dans le conteneur, tandis que ADD possède certaines fonctionnalités
-          (comme l'extraction de tar local uniquement et la prise en charge d'URL à 
-          distance) qui ne sont pas immédiatement évidentes.<br>
-          COPY est à priviligier si une simple copie est réalisée.
-        </aside>
-      </section>
+            </figure>
+            <figure class="explications">
+              Cette instruction copie simplement le fichier config.txt dans le
+              répertoire /tmp/ de l'image.
+            </figure>
+          </div>
+          <aside class="notes">
+            Cette instruction ne prend en charge que la copie de base des fichiers
+            locaux dans le conteneur, tandis que ADD possède certaines fonctionnalités
+            (comme l'extraction de tar local uniquement et la prise en charge d'URL à
+            distance) qui ne sont pas immédiatement évidentes.<br>
+            COPY est à priviligier si une simple copie est réalisée.
+          </aside>
+        </section>
 
-      <section>
-        <h2>Le mot clé <strong>ADD</strong></h2>
-        <blockquote>Il permet d'ajouter des fichiers locaux ou distants à l'intérieur de 
-          votre image.</blockquote>
-        <div class="side-by-side">
-          <figure class="">
-            <pre><code class="dockerfile">
+        <section>
+          <h2>Le mot clé <strong>ADD</strong></h2>
+          <blockquote>Il permet d'ajouter des fichiers locaux ou distants à l'intérieur de
+            votre image.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
 ...
 ADD package.json /app/
 ...
             </code></pre>
-          </figure>
-          <figure class="explications">
-            cette commande ADD copie le fichier package.json dans le répertoire 
-            /app/ de notre future image.
-          </figure>
-        </div>
-        <aside class="notes">
-          L'instruction ADD fait donc la même chose que l'instruction COPY 
-          sur un simple fichier ou répertoire.<br>
-          La différence avec l'instruction COPY est qu'il peut aussi copier 
-          depuis une URL. Dans ce cas, docker se charge du téléchargement 
-          et de placer le fichier téléchargé dans le répertoire destination.<br>
-          Si la source est un fichier zippé et la destination un répertoire, 
-          docker dezzipe la source à la volée.
-        </aside>
-      </section>
+            </figure>
+            <figure class="explications">
+              cette commande ADD copie le fichier package.json dans le répertoire
+              /app/ de notre future image.
+            </figure>
+          </div>
+          <aside class="notes">
+            L'instruction ADD fait donc la même chose que l'instruction COPY
+            sur un simple fichier ou répertoire.<br>
+            La différence avec l'instruction COPY est qu'il peut aussi copier
+            depuis une URL. Dans ce cas, docker se charge du téléchargement
+            et de placer le fichier téléchargé dans le répertoire destination.<br>
+            Si la source est un fichier zippé et la destination un répertoire,
+            docker dezzipe la source à la volée.
+          </aside>
+        </section>
 
-      <section>
-        <h2>Le mot clé <strong>WORKDIR</strong></h2>
-        <blockquote>Il permet de changer le répertoire courant de votre image.</blockquote>
-        <div class="side-by-side">
-          <figure class="">
-            <pre><code class="dockerfile">
+        <section>
+          <h2>Le mot clé <strong>WORKDIR</strong></h2>
+          <blockquote>Il permet de changer le répertoire courant de votre image.</blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
 ...
 WORKDIR /app
 ...
             </code></pre>
-          </figure>
-          <figure class="explications">
-            Toutes les commandes qui suivront seront exécutées à partir de ce répertoire /app.
-          </figure>
-        </div>
-        <aside class="notes">
-          
-        </aside>
-      </section>
+            </figure>
+            <figure class="explications">
+              Toutes les commandes qui suivront seront exécutées à partir de ce répertoire /app.
+            </figure>
+          </div>
+          <aside class="notes">
 
-      <section>
-        <h2>Le mot clé <strong>EXPOSE</strong></h2>
-        <blockquote>
-          Il permet d'indiquer quel port nous souhaitons ouvrir depuis l'extérieur de l'image.
-        </blockquote>
-        <div class="side-by-side">
-          <figure class="">
-            <pre><code class="dockerfile">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>EXPOSE</strong></h2>
+          <blockquote>
+            Il permet d'indiquer quel port nous souhaitons ouvrir depuis l'extérieur de l'image.
+          </blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
 ...
 EXPOSE 8080
 ...
             </code></pre>
-          </figure>
-          <figure class="explications">
-            Cette commande ouvrira le port 8080 depuis l'extérieur.<br>
-            Par défaut tous les ports sont fermés. Le port 8080 sera donc 
-            le seul port d'accès à notre application.<br>
-            Il est possible d'ouvrir plusieurs ports.
-          </figure>
-        </div>
-        <aside class="notes">
-          
-        </aside>
-      </section>
+            </figure>
+            <figure class="explications">
+              Cette commande ouvrira le port 8080 depuis l'extérieur.<br>
+              Par défaut tous les ports sont fermés. Le port 8080 sera donc
+              le seul port d'accès à notre application.<br>
+              Il est possible d'ouvrir plusieurs ports.
+            </figure>
+          </div>
+          <aside class="notes">
 
-      <section>
-        <h2>Le mot clé <strong>VOLUME</strong></h2>
-        <blockquote>
-          Il permet d'indiquer quel dossier nous souhaitons partager.
-        </blockquote>
-        <div class="side-by-side">
-          <figure class="">
-            <pre><code class="dockerfile">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>VOLUME</strong></h2>
+          <blockquote>
+            Il permet d'indiquer quel dossier nous souhaitons partager.
+          </blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
 ...
 VOLUME /app/log
 ...
             </code></pre>
-          </figure>
-          <figure class="explications">
-            L'instruction VOLUME crée un point de montage avec le nom spécifié.
-            Cette instruction permet la persistence des données en créant un volume sur le disque.
-            Ce volume peut être partagé entre container.
-          </figure>
-        </div>
-        <aside class="notes">
-          A noter que Docker ne supprimera jamais automatiquement un volume 
-          même si plus aucun conteneur n’y fait référence.<br>
-          Ce sera à vous de faire le ménage !
-        </aside>
-      </section>
+            </figure>
+            <figure class="explications">
+              L'instruction VOLUME crée un point de montage avec le nom spécifié.
+              Cette instruction permet la persistence des données en créant un volume sur le disque.
+              Ce volume peut être partagé entre container.
+            </figure>
+          </div>
+          <aside class="notes">
+            A noter que Docker ne supprimera jamais automatiquement un volume
+            même si plus aucun conteneur n’y fait référence.<br>
+            Ce sera à vous de faire le ménage !
+          </aside>
+        </section>
 
-      <section>
-        <h2>Le mot clé <strong>ENV</strong></h2>
-        <blockquote>
-          Il permet de dénir une variable d'environnement à l'intérieur de l'image.
-        </blockquote>
-        <div class="side-by-side">
-          <figure class="">
-            <pre><code class="dockerfile">
+        <section>
+          <h2>Le mot clé <strong>ENV</strong></h2>
+          <blockquote>
+            Il permet de dénir une variable d'environnement à l'intérieur de l'image.
+          </blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
 ...
 ENV LOGIN_POSTGRES postgres
 ENV PASS_POSTGRES="frozenCat"
 ...
             </code></pre>
-          </figure>
-          <figure class="explications">
-            Dans cet exemple, 2 variables d'environnements sont créées :
-            <ul>
-              <li>LOGIN_POSTGRES qui aura pour valeur "postgres"</li>
-              <li>PASS_POSTGRES qui aura pour valeur "frozenCat"</li>
-            </ul>
-          </figure>
-        </div>
-        <aside class="notes">
-          Cette instruction permet de transmettre efficacement des paramètres 
-          de configuration personnalisés au code executé au lancement de l'image.
-        </aside>
-      </section>
+            </figure>
+            <figure class="explications">
+              Dans cet exemple, 2 variables d'environnements sont créées :
+              <ul>
+                <li>LOGIN_POSTGRES qui aura pour valeur "postgres"</li>
+                <li>PASS_POSTGRES qui aura pour valeur "frozenCat"</li>
+              </ul>
+            </figure>
+          </div>
+          <aside class="notes">
+            Cette instruction permet de transmettre efficacement des paramètres
+            de configuration personnalisés au code executé au lancement de l'image.
+          </aside>
+        </section>
 
-      <section>
-        <h2>Le mot clé <strong>LABEL</strong></h2>
-        <blockquote>
-          Il permet d'ajouter des métadonnées à la création de l'image.
-        </blockquote>
-        <div class="side-by-side">
-          <figure class="">
-            <pre><code class="dockerfile">
+        <section>
+          <h2>Le mot clé <strong>LABEL</strong></h2>
+          <blockquote>
+            Il permet d'ajouter des métadonnées à la création de l'image.
+          </blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
 ...
 LABEL maintener="Sylvain GRIPPON"
 LABEL email="sylvain.grippon.dev@gmail.com"
 ...
             </code></pre>
-          </figure>
-          <figure class="explications">
-            Cette instruction est utilisée pour tracer l'image :
-            <ul>
-              <li>A qui appartient cette image ?</li>
-              <li>Comment joindre le propriétaire ?</li>
-              <li>...</li>
-            </ul>
-            
-          </figure>
-        </div>
-        <aside class="notes">
-          
-        </aside>
-      </section>
+            </figure>
+            <figure class="explications">
+              Cette instruction est utilisée pour tracer l'image :
+              <ul>
+                <li>A qui appartient cette image ?</li>
+                <li>Comment joindre le propriétaire ?</li>
+                <li>...</li>
+              </ul>
 
-      <section>
-        <h2>Le mot clé <strong>USER</strong></h2>
-        <blockquote>
-          Il définit le nom d'utilisateur qui execturera les instructions 
-          RUN, CMD et ENTRYPOINT qui le suivent dans le Dockerfile.
-        </blockquote>
-        <div class="side-by-side">
-          <figure class="">
-            <pre><code class="dockerfile">
+            </figure>
+          </div>
+          <aside class="notes">
+
+          </aside>
+        </section>
+
+        <section>
+          <h2>Le mot clé <strong>USER</strong></h2>
+          <blockquote>
+            Il définit le nom d'utilisateur qui execturera les instructions
+            RUN, CMD et ENTRYPOINT qui le suivent dans le Dockerfile.
+          </blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
 ...
 USER postgres
 ...
             </code></pre>
-          </figure>
-          <figure class="explications">
-            Cette instruction définira le USER postgres comme étant celui qui executera 
-            les prochaines instructions.<br>
-            C'est l'équivalent de la commande shell<br>
-            <pre><code class="shell">
+            </figure>
+            <figure class="explications">
+              Cette instruction définira le USER postgres comme étant celui qui executera
+              les prochaines instructions.<br>
+              C'est l'équivalent de la commande shell<br>
+              <pre><code class="shell">
 su - postgres
             </code></pre>
-          </figure>
-        </div>
-        <aside class="notes">
-          L'instruction USER définit le nom d'utilisateur (ou UID) et 
-          éventuellement le groupe d'utilisateurs (ou GID) à utiliser 
-          lors de l'exécution de l'image et pour toutes les instructions 
-          RUN, CMD et ENTRYPOINT qui le suivent dans le Dockerfile.
-        </aside>
-      </section>
+            </figure>
+          </div>
+          <aside class="notes">
+            L'instruction USER définit le nom d'utilisateur (ou UID) et
+            éventuellement le groupe d'utilisateurs (ou GID) à utiliser
+            lors de l'exécution de l'image et pour toutes les instructions
+            RUN, CMD et ENTRYPOINT qui le suivent dans le Dockerfile.
+          </aside>
+        </section>
 
-      <section>
-        <h2>Le mot clé <strong>CMD</strong></h2>
-        <blockquote>
-          Il est utilisé pour définir la commande executée au démarrage du 
-          container.
-        </blockquote>
-        <div class="side-by-side">
-          <figure class="">
-            <pre><code class="dockerfile">
+        <section>
+          <h2>Le mot clé <strong>CMD</strong></h2>
+          <blockquote>
+            Il est utilisé pour définir la commande executée au démarrage du
+            container.
+          </blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
 ...
 CMD ["/bin/echo", "My first command !"]
             </code></pre>
-          </figure>
-          <figure class="explications">
-            Cette instruction executera cette ligne de commande à l'intérieur du container :
-            <pre><code class="shell">
+            </figure>
+            <figure class="explications">
+              Cette instruction executera cette ligne de commande à l'intérieur du container :
+              <pre><code class="shell">
 /bin/echo "My first command !"
             </code></pre>
-          </figure>
-        </div>
-        <aside class="notes">
-          Le but principal d'un CMD est de fournir des valeurs par défaut pour un 
-          conteneur en cours d'exécution. Ces valeurs par défaut peuvent inclure 
-          un exécutable, ou elles peuvent omettre l'exécutable, auquel cas vous 
-          devez également spécifier une instruction ENTRYPOINT.
-        </aside>
-      </section>
+            </figure>
+          </div>
+          <aside class="notes">
+            Le but principal d'un CMD est de fournir des valeurs par défaut pour un
+            conteneur en cours d'exécution. Ces valeurs par défaut peuvent inclure
+            un exécutable, ou elles peuvent omettre l'exécutable, auquel cas vous
+            devez également spécifier une instruction ENTRYPOINT.
+          </aside>
+        </section>
 
-      <section>
-        <h2>Le mot clé <strong>ENTRYPOINT</strong></h2>
-        <blockquote>
-          Il est utilisé pour configurer un container au démarrage.
-        </blockquote>
-        <div class="side-by-side">
-          <figure class="">
-            <pre><code class="dockerfile">
+        <section>
+          <h2>Le mot clé <strong>ENTRYPOINT</strong></h2>
+          <blockquote>
+            Il est utilisé pour configurer un container au démarrage.
+          </blockquote>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="dockerfile">
 ...
 ENTRYPOINT ["/bin/echo"]
 CMD ["My first command !"]
             </code></pre>
-          </figure>
-          <figure class="explications">
-            Cette instruction executera cette ligne de commande à l'intérieur du container :<br>
-            <pre><code class="shell">
+            </figure>
+            <figure class="explications">
+              Cette instruction executera cette ligne de commande à l'intérieur du container :<br>
+              <pre><code class="shell">
 /bin/echo "My first command !"
             </code></pre>
-          </figure>
-        </div>
-        <aside class="notes">
-          
-        </aside>
+            </figure>
+          </div>
+          <aside class="notes">
+
+          </aside>
+        </section>
+
+        <section>
+          <h2><strong>ENTRYPOINT</strong> & <strong>CMD</strong></h2>
+          <table style="font-size: 0.5em;">
+            <thead>
+              <td></td>
+              <td style="text-align: center;">No<br>ENTRYPOINT</td>
+              <td>ENTRYPOINT<br>exec_entry p1_entry</td>
+              <td>ENTRYPOINT<br>[“exec_entry”, “p1_entry”]</td>
+            </thead>
+            <tbody>
+              <tr>
+                <td>No CMD</td>
+                <td>error, not allowed</td>
+                <td>/bin/sh -c exec_entry p1_entry</td>
+                <td>exec_entry p1_entry</td>
+              </tr>
+              <tr>
+                <td>CMD [“exec_cmd”, “p1_cmd”]</td>
+                <td>exec_cmd p1_cmd</td>
+                <td>/bin/sh -c exec_entry p1_entry</td>
+                <td>exec_entry p1_entry exec_cmd p1_cmd</td>
+              </tr>
+              <tr>
+                <td>CMD [“p1_cmd”, “p2_cmd”]</td>
+                <td>p1_cmd p2_cmd</td>
+                <td>/bin/sh -c exec_entry p1_entry</td>
+                <td>exec_entry p1_entry p1_cmd p2_cmd</td>
+              </tr>
+              <tr>
+                <td>CMD exec_cmd p1_cmd</td>
+                <td>/bin/sh -c exec_cmd p1_cmd</td>
+                <td>/bin/sh -c exec_entry p1_entry</td>
+                <td>exec_entry p1_entry /bin/sh -c exec_cmd p1_cmd</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
       </section>
 
       <section>
-        <h2><strong>ENTRYPOINT</strong> & <strong>CMD</strong></h2>
-        <table style="font-size: 0.5em;">
-          <thead>
-            <td></td>
-            <td style="text-align: center;">No<br>ENTRYPOINT</td>
-            <td>ENTRYPOINT<br>exec_entry p1_entry</td>
-            <td>ENTRYPOINT<br>[“exec_entry”, “p1_entry”]</td>
-          </thead>
-          <tbody>
-            <tr>
-              <td>No CMD</td>
-              <td>error, not allowed</td>
-              <td>/bin/sh -c exec_entry p1_entry</td>
-              <td>exec_entry p1_entry</td>
-            </tr>
-            <tr>
-              <td>CMD [“exec_cmd”, “p1_cmd”]</td>
-              <td>exec_cmd p1_cmd</td>
-              <td>/bin/sh -c exec_entry p1_entry</td>
-              <td>exec_entry p1_entry exec_cmd p1_cmd</td>
-            </tr>
-            <tr>
-              <td>CMD [“p1_cmd”, “p2_cmd”]</td>
-              <td>p1_cmd p2_cmd</td>
-              <td>/bin/sh -c exec_entry p1_entry</td>
-              <td>exec_entry p1_entry p1_cmd p2_cmd</td>
-            </tr>
-            <tr>
-              <td>CMD exec_cmd p1_cmd</td>
-              <td>/bin/sh -c exec_cmd p1_cmd</td>
-              <td>/bin/sh -c exec_entry p1_entry</td>
-              <td>exec_entry p1_entry /bin/sh -c exec_cmd p1_cmd</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+
+        <section>
+          <h1>Utilisation du Dockerfile</h1>
+        </section>
         
-    </section>
+        <section>
+          <h2>Principe des commandes Docker</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker _type_ _command_
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Les commandes Docker sont très souvent affectées à un 
+              type d'object sur lequel la commande agira.
+            </figure>
+          </div>
+          <aside class="notes">
+            Les types peuvent être :
+            <ul>
+              <li>container</li>
+              <li>image</li>
+              <li>network</li>
+              <li>volume</li>
+              <li>service</li>
+              <li>...</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Docker Help</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker -h
+$ docker --help
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Cette commande est la seule à connaitre,<br>elle vous affichera
+              la syntaxe des autres commandes.
+            </figure>
+          </div>
+          <aside class="notes">
+            Il est possible d'ajouter l'argument -h après le type ou la 
+            commande sur laquelle vous souhaitez plus d'informations.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Docker List</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker image ls
+$ docker container ls
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Cette commande vous permettra de lister les types d'object présents 
+              sur votre environnement.
+            </figure>
+          </div>
+          <aside class="notes">
+            C'est gràce à cette commande que vous pourrez récupérer les ID des 
+            objects à supprimer par exemple.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Docker Delete</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker image rm
+$ docker network rm
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Cette commande vous permettra de supprimer les types d'object présents 
+              sur votre environnement.
+            </figure>
+          </div>
+          <aside class="notes">
+            Un object ne pourra être supprimé que s'il n'est plus utilisé.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Docker Process List</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker ps
+$ docker ps -a
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Cette commande vous permettra de lister tout les containers lancés .
+            </figure>
+          </div>
+          <aside class="notes">
+            Un object ne pourra être supprimé que s'il n'est plus utilisé.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Construction de l'image</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker build -t app/web:latest .
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              la commande <strong>build</strong> construira une image 
+              nommée app/web depuis le fichier Dockerfile présent dans 
+              le répertoire local et lui affectera le tag latest.
+            </figure>
+          </div>
+          <aside class="notes">
+
+          </aside>
+        </section>
+      
+        <section>
+          <h2>Lancement de l'image</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker run -d \
+  --name _container-name_ \
+  -e _variable-environnement_
+  -p 8888:80 \
+  _image-name_
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              la commande <strong>run</strong> lancera l'execution du container en se
+              basant sur l'image spécifiée ici _image-name_
+            </figure>
+          </div>
+          <aside class="notes">
+            Explications des arguments :
+            <ul>
+              <li>-d : indique à Docker de se détacher du container</li>
+              <li>-e : spécifie une variable d'environnement interne au container</li>
+              <li>-p : spécifie les ports exposés et leur correspondance externe</li>
+              <li>--name : défini le nom du container</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Arrêt du container</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker stop _id-container_
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              la commande <strong>stop</strong> arrêtera l'execution du container 
+              spécifié ici _id-container_
+            </figure>
+          </div>
+          <aside class="notes">
+            Le container peut être spécifié par son ID, son nom.
+            La commande kill peut remplacer la commande stop et dans ce cas l'arrêt 
+            est brutal.
+          </aside>
+        </section>
+
+      </section>
+
       <section>
         <section>
           <h1>Annexe</h1>
@@ -487,8 +669,7 @@ CMD ["My first command !"]
       transition: 'slide', // none/fade/slide/convex/concave/zoom
 
       // More info https://github.com/hakimel/reveal.js#dependencies
-      dependencies: [
-        {
+      dependencies: [{
           src: '../reveal-3.9.2/plugin/markdown/marked.js'
         },
         {

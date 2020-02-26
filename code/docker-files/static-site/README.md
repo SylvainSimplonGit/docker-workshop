@@ -56,3 +56,11 @@ Puis dans votre navigateur, entrer l'URL suivante : <http://localhost:8888/>
 Vous devriez voir :
 
 ![Resultat](resources/result-html.png)
+
+## Arrêter le container
+
+Pour arrêter le container depuis l'image créée, executer la commande suivante dans un terminal :
+
+```shell
+docker stop static-site
+```
