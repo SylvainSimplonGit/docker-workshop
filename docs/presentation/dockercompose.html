@@ -387,6 +387,148 @@ networks:
       </section>
 
       <section>
+
+        <section>
+          <h1>Utilisation du Docker Compose</h1>
+        </section>
+
+        <section>
+          <h2>Principe des commandes Compose</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker _command_
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Les commandes Compose se base sur un fichier 
+              docker-compose.yml qui doit être présent dans le 
+              répertoire courant.
+            </figure>
+          </div>
+          <aside class="notes">
+            
+          </aside>
+        </section>
+
+        <section>
+          <h2>Docker Compose Help</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker-compose -h
+$ docker-compose --help
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Cette commande est la seule à connaitre,<br>elle vous affichera
+              la syntaxe des autres commandes.
+            </figure>
+          </div>
+          <aside class="notes">
+            Il est possible d'ajouter l'argument -h après la commande 
+            sur laquelle vous souhaitez plus d'informations.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Docker Compose Run</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker-compose up -d
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Cette commande executera le contenu du fichier 
+              docker-compose.yml du répertoire courant, ce qui aura 
+              pour effet de lancer les services de ce fichier.
+            </figure>
+          </div>
+          <aside class="notes">
+            
+          </aside>
+        </section>
+
+        <section>
+          <h2>Docker Compose List Process</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker-compose ps
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Cette commande listera tous les containers associés aux services 
+              du fichier docker-compose.yml du réperoire courant.
+            </figure>
+          </div>
+          <aside class="notes">
+            
+          </aside>
+        </section>
+
+        <section>
+          <h2>Docker Compose Stop</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker-compose stop
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Cette commande stoppera l'ensemble des objects qui dépendent 
+              du fichier docker-compose.yml du répertoire courant.
+            </figure>
+          </div>
+          <aside class="notes">
+            Les containers des services seront stoppés, puis supprimés ainsi 
+            que les networks et volumes.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Docker Compose Down</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker-compose down
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Cette commande stoppera et <strong>supprimera</strong> l'ensemble 
+              des objects qui dépendent du fichier docker-compose.yml du répertoire
+              courant.
+            </figure>
+          </div>
+          <aside class="notes">
+            Les containers des services seront stoppés, puis supprimés ainsi 
+            que les networks et volumes.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Docker Compose Logs</h2>
+          <div class="side-by-side">
+            <figure class="">
+              <pre><code class="shell">
+$ docker-compose logs
+            </code></pre>
+            </figure>
+            <figure class="explications">
+              Cette commande permet d'afficher les logs interne aux containers
+              lancés à partir du fichier docker-compose.yml du répertoire
+              courant.
+            </figure>
+          </div>
+          <aside class="notes">
+            Chaque logs sera préfixés par le nom du service.
+          </aside>
+        </section>
+
+      </section>
+
+      <section>
         <section>
           <h1>Annexe</h1>
           <img class="logo" src="ressources/images/logo_annexe.jpg" alt="Logo Annexe">
@@ -410,7 +552,7 @@ networks:
       history: true,
       center: true,
       layout: 'Tall',
-
+      totalTime: 900,
       transition: 'slide', // none/fade/slide/convex/concave/zoom
 
       // More info https://github.com/hakimel/reveal.js#dependencies
