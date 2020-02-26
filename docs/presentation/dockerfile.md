@@ -284,6 +284,35 @@ Voici les différents effets en fonction de l'écriture du couple **ENTRYPOINT**
 | CMD [“p1_cmd”, “p2_cmd”]   | p1_cmd p2_cmd              | /bin/sh -c exec_entry p1_entry | exec_entry p1_entry p1_cmd p2_cmd              |
 | CMD exec_cmd p1_cmd        | /bin/sh -c exec_cmd p1_cmd | /bin/sh -c exec_entry p1_entry | exec_entry p1_entry /bin/sh -c exec_cmd p1_cmd |
 
+## Construction d'une image
+
+Pour construire l'image depuis le fichier Dockerfile, executez la commande suivante :
+
+```shell
+# Construction de l'image
+$ docker build -t <nom_image>:latest .
+```
+
+Cette commande construira une image nommée `<nom_image>` depuis le fichier Dockerfile situé dans le répertoire `.` (ici le répertoire courant) en lui affectant le tag `latest`.
+
+## Lancement du image
+
+Pour démarrer le container depuis l'image créée, executer la commande suivante dans un terminal :
+
+```shell
+docker run --name <nom_container> -d <nom_image>
+```
+
+Cette commande démarrera un container nommé `<nom_container>` depuis l'image nommée `<nom_image>` ayant le tag `latest` (par défaut).
+
+## Arrêt du container
+
+Pour arrêter le container précédemment lancé, exécuter la commande suivante dans un terminal :
+
+```shell
+docker stop <nom_container>
+```
+
 ## Annexe
 
 ### Liens
