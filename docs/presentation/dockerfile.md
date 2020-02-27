@@ -2,7 +2,7 @@
 
 Les Dockerfiles sont des fichiers qui permettent de construire une image Docker adaptée à nos besoins, étape par étape.
 
-Docker exécute les instructions d'un Dockerfile séquentiellement. Chaque instructions sera lue dans l'ordre du Dockerfile.
+Docker exécute les instructions d'un Dockerfile séquentiellement. Chaque instruction sera lue dans l'ordre du Dockerfile.
 
 Le fichier Dockerfile n'a pas d'extension et se situe en général à la racine de votre projet.
 
@@ -139,7 +139,7 @@ cette commande **ADD** copie le fichier package.json dans le répertoire /app/ d
 
 L'instruction **ADD** fait donc la même chose que l'instruction **COPY** sur un simple fichier ou répertoire.
 
-La différence avec l'instruction **COPY** est qu'il peut aussi copier depuis une URL. Dans ce cas, docker se charge du téléchargement et de placer le fichier téléchargé dans le répertoire destination.
+La différence avec l'instruction **COPY** est qu'elle peut aussi copier depuis une URL. Dans ce cas, docker se charge du téléchargement et de placer le fichier téléchargé dans le répertoire destination.
 
 Si la source est un fichier zippé et la destination un répertoire, docker dezzipe la source à la volée, exemple :
 
@@ -195,7 +195,7 @@ VOLUME /app/log
 
 L'instruction VOLUME crée un point de montage avec le nom spécifié.
 Cette instruction permet la persistence des données en créant un volume sur le disque.
-Ce volume peut être partagé entre container.
+Ce volume peut être partagé entre containers.
 
 > A noter que Docker ne supprimera jamais automatiquement un volume même si plus aucun conteneur n’y fait référence. Ce sera à vous de faire le ménage !
 
