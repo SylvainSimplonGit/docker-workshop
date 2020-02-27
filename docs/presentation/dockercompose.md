@@ -81,7 +81,7 @@ volumes:
 
 ## Le mot clé **version**
 
-Il définit la version de la syntaxe utilisé du fichier docker-compose
+Il définit la version de la syntaxe utilisée du fichier docker-compose
 
 ## Le mot clé **services**
 
@@ -100,7 +100,7 @@ services:
 ...
 ```
 
-Dans cette exemple, 3 services seront lancés lors de l'excution du fichier docker-compose.yml. Pour lancer ces services, Docker lancera 3 containers qui proteront les noms suivants :
+Dans cet exemple, 3 services seront lancés lors de l'excution du fichier docker-compose.yml. Pour lancer ces services, Docker lancera 3 containers qui proteront les noms suivants :
 
 - web-php
 - web-nginx
@@ -138,7 +138,7 @@ Situé juste après le mot clé **build**, il définit le nom de l'image constru
 
 ## Le mot clé **container_name**
 
-Il permet de définir le nom du container qui sera lancé pour le service. Cette propriété est particulièrement utilise pour préfixer tous les services d'une application (App, Server Web, DB, ...).
+Il permet de définir le nom du container qui sera lancé pour le service. Cette propriété est particulièrement utilisée pour préfixer tous les services d'une application (App, Server Web, DB, ...).
 
 ## Le mot clé **restart**
 
@@ -146,14 +146,14 @@ Il permet de définir le nom du container qui sera lancé pour le service. Cette
 
 Il permet de gérer le redémarrage du service en fonction des états de sortie du container.
 
-Par défaut, sa valeur est à `no`, c'est à dire que le service ne sera pas relancé si le container s'arrête pour n'importe quel raisons (plantage de l'application, arrêt volontaire du container, arrêt de Docker, ...).
+Par défaut, sa valeur est à `no`, c'est à dire que le service ne sera pas relancé si le container s'arrête pour n'importe quelle raison (plantage de l'application, arrêt volontaire du container, arrêt de Docker, ...).
 
 Il peut avoir les valeurs suivantes :
 
 - 'no'
   - Pas de relance du service.
 - always
-  - Le service sera relancé quelque soit la sortie du container. Utile pour des outils de supervision (Portainer) ou de routage (Traefik)
+  - Le service sera relancé quelleque soit la sortie du container. Utile pour des outils de supervision (Portainer) ou de routage (Traefik)
 - on-failure
   - le service sera redémarré uniquement lors d'une sortie du code sur erreur.
 - unless-stopped
@@ -231,7 +231,7 @@ volumes:
   - ~/configs:/etc/configs/:ro
 ```
 
-Lorsque l'on souhaite pouvoir partager des données via un volume entre les services, il faudra nommé le volume au niveau le plus haut.
+Lorsque l'on souhaite pouvoir partager des données via un volume entre les services, il faudra nommer le volume au niveau le plus haut.
 
 ```yaml
 version: '3.7'
@@ -254,7 +254,7 @@ volumes:
 
 [Documentation officielle](https://docs.docker.com/compose/compose-file/#networks)
 
-Il permet de créé un réseau interne aux différents service de l'application.
+Il permet de créer un réseau interne aux différents services de l'application.
 
 ```yaml
 version: '3'
@@ -289,7 +289,7 @@ networks:
     driver: bridge
 ```
 
-Dans cet exemple, les services web-php, web-nginx et web-db seront tous démarré dans un réseau interne facilitant ainsi les flux entre eux.
+Dans cet exemple, les services web-php, web-nginx et web-db seront tous démarrés dans un réseau interne facilitant ainsi les flux entre eux.
 
 ## Annexe
 

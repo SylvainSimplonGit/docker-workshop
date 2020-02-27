@@ -38,11 +38,11 @@
         </section>
         <section>
           <h2>docker-compose</h2>
-          Docker Compose permet l'utilisation de multi services plus complexe qu'avec
+          Docker Compose permet l'utilisation de multi services plus complexes qu'avec
           l'utilisation de Dockerfile
         </section>
         <section>
-          <h2>exemple d'utilisation</h2>
+          <h2>Exemple d'utilisation</h2>
           <img class="logo70" src="ressources/images/docker-services.jpg" alt="Utilisation de Docker Compose">
           <aside class="notes">
             Dans cet exemple, on peut voir 3 applications :
@@ -69,7 +69,7 @@
         </section>
 
         <section>
-          <h2>Dockerfile exemple</h2>
+          <h2>Exemple de fichier docker-compose</h2>
           <pre><code class="yaml">
 version: '3'
 services:
@@ -96,7 +96,7 @@ networks:
 
         <section>
           <h2>Le mot clé <strong>version</strong></h2>
-          <blockquote>Il définit la version de la syntaxe utilisé pour le fichier docker-compose.</blockquote>
+          <blockquote>Il définit la version de la syntaxe utilisée pour le fichier docker-compose.</blockquote>
           <div class="side-by-side">
             <figure class="">
               <pre><code class="yaml">
@@ -144,7 +144,7 @@ networks:
           <aside class="notes">
             Dans cette exemple, 2 services seront lancés lors de l'excution du fichier
             docker-compose.yml. Pour lancer ces services, Docker lancera 3 containers qui
-            proteront les noms suivants :
+            porteront les noms suivants :
             <ul>
               <li>web-php</li>
               <li>web-nginx</li>
@@ -228,7 +228,7 @@ services:
             </figure>
           </div>
           <aside class="notes">
-            Cette propriété est particulièrement utilise pour préfixer tous les services
+            Cette propriété est particulièrement utilisée pour préfixer tous les services
             d'une application (App, Server Web, DB, ...).
           </aside>
         </section>
@@ -247,7 +247,7 @@ services:
           </code></pre>
             </figure>
             <figure class="explications">
-              Ici le service web-nginx sera redémarrer uniquement si le service n'a pas
+              Ici le service web-nginx sera redémarré uniquement si le service n'a pas
               été arrêté manuellement.
             </figure>
           </div>
@@ -351,13 +351,13 @@ services:
           </div>
           <aside class="notes">
             Lorsque l'on souhaite pouvoir partager des données via un volume entre les services, 
-            il faudra nommé le volume au niveau le plus haut.
+            il faudra nommer le volume au niveau le plus haut.
           </aside>
         </section>
 
         <section>
           <h2>Le mot clé <strong>networks</strong></h2>
-          <blockquote>Il permet de créé un réseau interne aux différents service de l'application.</blockquote>
+          <blockquote>Il permet de créer un réseau interne aux différents services de l'application.</blockquote>
           <div class="side-by-side">
             <figure class="">
               <pre><code class="yaml">
@@ -375,7 +375,7 @@ networks:
           </code></pre>
             </figure>
             <figure class="explications">
-              Dans cet exemple, les services web-php, web-nginx seront tous démarré dans un 
+              Dans cet exemple, les services web-php, web-nginx seront tous démarrés dans un 
               réseau interne facilitant ainsi les flux entre eux.
             </figure>
           </div>
@@ -401,7 +401,7 @@ $ docker _command_
             </code></pre>
             </figure>
             <figure class="explications">
-              Les commandes Compose se base sur un fichier 
+              Les commandes Compose se basent sur un fichier 
               docker-compose.yml qui doit être présent dans le 
               répertoire courant.
             </figure>
@@ -522,7 +522,7 @@ $ docker-compose logs
             </figure>
           </div>
           <aside class="notes">
-            Chaque logs sera préfixés par le nom du service.
+            Chaque log sera préfixés par le nom du service.
           </aside>
         </section>
 
