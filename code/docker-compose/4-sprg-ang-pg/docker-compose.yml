@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile.ihm
+    image: resto_front
+    container_name: resto_front
+    ports:
+      - 8080:80
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: resto-api
+    container_name: resto_api
+    ports:
+      - 8081:9090
+  db:
+    image: postgres:alpine
+    container_name: resto_db
+    environment:
+      POSTGRES_PASSWORD: motdepasse
+  adminer:
+    image: adminer
+    container_name: resto_adminer
+    ports:
+      - 8082:8080

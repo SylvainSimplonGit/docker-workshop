@@ -1,0 +1,13 @@
+<form [formGroup]="filterForm" (ngSubmit)="onFilter(filterForm.value)">
+  <label for="lowest">Pire note</label>
+  <input type="number" id="lowest" formControlName="lowestNote">
+  <label for="highest">Meilleure note</label>
+  <input type="number" id="highest" formControlName="highestNote">
+  <button>Filtrer les restaurants</button>
+</form>
+<div *ngFor="let restaurant of restaurantList | async">
+  <h2>{{restaurant.name}}</h2>
+  <h5>Type : {{restaurant.restaurantType}}</h5>
+  <h5>Nombre de couverts : {{restaurant.seats}}</h5>
+  <app-restaurant-review-list [restaurantId]="restaurant.id" [reviews]="restaurant.reviews"></app-restaurant-review-list>
+</div>

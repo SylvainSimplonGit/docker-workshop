@@ -1,0 +1,29 @@
+# Stage 1
+# Building app
+# Base image
+FROM maven:3.6.3-jdk-11-slim AS MAVEN_BUILD
+
+# Copy app dependencies
+COPY resto-api/pom.xml /build/
+# Copy app sources
+COPY resto-api/src /build/src/
+
+# Set working directory
+WORKDIR /build/
+
+# Build app
+RUN mvn package
+
+# Stage 2
+# Deploy app
+# Base image
+FROM openjdk:15-jdk-alpine3.11
+
+# Set working directory
+WORKDIR /app
+
+# Copy build app into openjdk image folder
+COPY --from=MAVEN_BUILD /build/target/restaurant-1.0.0.jar /app/
+
+# Run command at starting container
+ENTRYPOINT [ "java", "-jar", "restaurant-1.0.0.jar" ]
