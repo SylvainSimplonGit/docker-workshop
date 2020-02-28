@@ -21,6 +21,7 @@ Pour en savoir plus sur toutes les fonctionnalités de Compose, consultez la lis
 - [Le mot clé **environment**](#le-mot-clé-environment)
 - [Le mot clé **volumes**](#le-mot-clé-volumes)
 - [Le mot clé **networks**](#le-mot-clé-networks)
+- [Le mot clé **depends_on**](#le-mot-clé-depends_on)
 - [Annexe](#annexe)
 
 ## Docker Compose exemple
@@ -290,6 +291,28 @@ networks:
 ```
 
 Dans cet exemple, les services web-php, web-nginx et web-db seront tous démarrés dans un réseau interne facilitant ainsi les flux entre eux.
+
+## Le mot clé **depends_on**
+
+[Documentation officielle](https://docs.docker.com/compose/compose-file/#depends_on)
+
+Il permet de gérer les dépendances entre services. Ainsi un service A dépendant d'un service B sera démarré après le service B.
+
+```yaml
+version: "3.7"
+services:
+  web:
+    build: .
+    depends_on:
+      - db
+      - redis
+  redis:
+    image: redis
+  db:
+    image: postgres
+```
+
+la commande `docker-compose up` démarrera les services dans l'ordre des dépendances. Dans l'exemple précédent, `db` et `redis` seront démarrés avant `web`.
 
 ## Annexe
 

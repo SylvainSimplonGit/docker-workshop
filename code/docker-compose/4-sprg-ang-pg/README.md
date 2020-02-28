@@ -13,7 +13,15 @@
   Docker version 19.03.5, build 633a0ea
   ```
 
-## Lancer le service
+## Construire les services
+
+Pour démarrer les containers depuis l'image créée, executer la commande suivante dans un terminal :
+
+```shell
+docker-compose build
+```
+
+## Lancer les services
 
 Pour démarrer les containers depuis l'image créée, executer la commande suivante dans un terminal :
 
@@ -26,6 +34,20 @@ Puis dans votre navigateur, entrer l'URL suivante : <http://localhost:8080/>
 Vous devriez voir :
 
 ![Resultat](resources/result-dockercompose-4.png)
+
+## Visualiser les Logs
+
+Pour visualiser les logs en continue, exécuter la commande suivante dans un terminal :
+
+```shell
+docker-compose logs -f
+```
+
+Cette commande fera défiler les logs en continue. Pour sortir de cette commande :
+
+```shell
+CTRL + C
+```
 
 ## Arrêter votre service
 
