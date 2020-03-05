@@ -1,4 +1,4 @@
-# Exemple de Poject Apring / Angular / Postgresql
+# Exemple de Projet Spring / Angular / H2
 
 ## Prérequis
 
