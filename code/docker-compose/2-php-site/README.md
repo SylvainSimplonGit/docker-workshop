@@ -13,6 +13,10 @@
   Docker version 19.03.5, build 633a0ea
   ```
 
+> **ATTENTION**:
+>
+> Toutes les commandes `docker-compose ...` sont à exécuter dans le répertoire qui contient le fichier `docker-compose.yml`.
+
 ## Lancer le service
 
 Pour démarrer les containers depuis l'image créée, executer la commande suivante dans un terminal :
@@ -29,27 +33,37 @@ Vous devriez voir :
 
 ## Arrêter votre service
 
-Pour arrêter le service crée, exécuter la commande suivante dans un terminal :
+Pour arrêter le service créé, exécuter la commande suivante dans un terminal :
 
 ```shell
 docker-compose stop
 ```
 
-Cette commande arrêtera les services défini dans le fichier docker-compose.yml du répertoire courant.
+Cette commande arrêtera les services définis dans le fichier `docker-compose.yml` du répertoire courant.
+
+## Relancer votre service
+
+Pour relancer le service créé, exécuter la commande suivante dans un terminal :
+
+```shell
+docker-compose start
+```
+
+Cette commande relancera les services définis dans le fichier `docker-compose.yml` du répertoire courant.
 
 ## Arrêter et nettoyer votre service
 
-Pour arrêter le service crée, exécuter la commande suivante dans un terminal :
+Pour arrêter et nettoyer le service créé, exécuter la commande suivante dans un terminal :
 
 ```shell
 docker-compose down
 ```
 
-Cette commande arrêtera les services défini dans le fichier docker-compose.yml du répertoire courant puis supprimera les containers et network associés.
+Cette commande arrêtera les services définis dans le fichier docker-compose.yml du répertoire courant puis supprimera les containers et network associés.
 
 ## Supprimer les containers liés aux services lancés
 
-Une fois les services arrêtés, vous pouvez supprimer les containers associés via la commande suivante :
+Une fois les services arrêtés via la commade `docker-compose stop`, vous pouvez supprimer les containers associés via la commande suivante :
 
 ```shell
 docker-compose rm
