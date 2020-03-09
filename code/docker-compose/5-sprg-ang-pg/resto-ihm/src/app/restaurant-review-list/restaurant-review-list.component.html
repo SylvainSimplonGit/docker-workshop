@@ -1,0 +1,18 @@
+<p>Nouvel avis</p>
+<form [formGroup]="reviewForm" (ngSubmit)="onReview(reviewForm.value)">
+  <label for="note">Note</label>
+  <input type="number" formControlName="note" id="note" max="5" min="0">
+
+  <label for="comment">Commentaire</label>
+  <textarea id="comment" formControlName="comment"
+            rows="5" cols="33">
+  </textarea>
+  <button type="submit">Donner son avis !</button>
+</form>
+
+<div *ngFor="let review of reviews">
+  <h5>Avis n°{{review.id}}</h5>
+  <h6>Note : {{review.note}}</h6>
+  <h6>{{review.comment}}</h6>
+  <button (click)="onRemoveReview(review.id)">Supprimer l'avis</button>
+</div>
